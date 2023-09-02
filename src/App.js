@@ -6,17 +6,19 @@ import AboutUs from './pages/aboutus';
 import Login from './pages/login';
 import Saved from './pages/saved';
 import Home from './pages/home'
+import Success from './pages/loginsuccess'
 
 function App() {
   return (
       <Router>
         <Routes>
             <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile/>} />
-          <Route path="/notifications" element={<Notifications/>} />
-          <Route path="/aboutus" element={<AboutUs/>} />
-          <Route path="/login" element={<Login/>} />
-          <Route path="/saved" element={<Saved/>} />
+            <Route path="/profile" element={<Profile/>} />
+            <Route path="/notifications" element={<Notifications/>} />
+            <Route path="/aboutus" element={<AboutUs/>} />
+            <Route path="/login" element={<Login/>} />
+            <Route path="/saved" element={<Saved/>} />
+            <Route path="/success" element={<Success/>} />
         </Routes>
       </Router>
   );

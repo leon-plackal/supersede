@@ -1,13 +1,20 @@
-
 import { Link } from 'react-router-dom'
-// import { usePathname } from "next/navigation";
-//import {createClientComponentClient} from "supabase/auth-helpers-nextjs";
+import { createClient} from "@supabase/supabase-js";
+import {useNavigate} from "react-router-dom";
+
+const supabase = createClient("https://itaxkdkvrsdroytbpeoh.supabase.co", process.env.REACT_APP_SUPABASE_KEY)
 
 export default function NavigationCard() {
-    //const supabase = createClientComponentClient();
+    const navigate = useNavigate();
     async function logout() {
-        //await supabase.auth.signOut()
+        const { error } = await supabase.auth.signOut()
     }
+
+    supabase.auth.onAuthStateChange(async (event) => {
+        if (event === "SIGNED_OUT") {
+            navigate("/login");
+        }
+    });
     
     const pathname = 'jj' //usePathname();
     const activeNavStyle = "flex gap-3 py-3 bg-blue-600 text-white -mx-4 px-4 rounded-md shadow-md"
