@@ -11,7 +11,6 @@ fetch(redditAPIUrl)
             return {
                 title: postData.title,
                 image: postData.url_overridden_by_dest, // Use 'url' for non-media posts
-                upvotes: postData.ups,
                 link: `https://www.reddit.com${postData.permalink}`
             };
         });

@@ -3,7 +3,11 @@ import Avatar from "../components/Avatar";
 import {useEffect, useState} from "react";
 import { Link } from 'react-router-dom'
 
-export default function PostCard(){
+export default function PostCard({title, link, image, key}){
+    const openInNewTab = (url) => {
+        window.open(url, "_blank", "noreferrer");
+    };
+
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const inactiveNavStyle = "flex gap-3 py-2 my-2 hover:bg-socialBlue hover:text-white -mx-2 px-2 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-400"
 
@@ -41,7 +45,7 @@ export default function PostCard(){
                 <div className="grow">
                     <p>
                         <Link to={'/profile'}>
-                                <span className="mr-1 font-semibold hover:underline hover:cursor-pointer">John Doe</span>
+                                <span className="mr-1 font-semibold hover:underline hover:cursor-pointer">{title}</span>
                         </Link>
                         shared a
                         <span className="text-socialBlue"> post</span>
@@ -50,7 +54,9 @@ export default function PostCard(){
                     <p className="text-lTextSecondary dark:text-dTextSecondary text-sm">2 hours ago</p>
                 </div>
                 <div>
-                    S
+                    <button onClick={() => openInNewTab(`${link}`)}>
+                        Source
+                    </button>
                 </div>
                 <div>
                     <button className="text-lTextPrimary dark:text-dTextPrimary" onClick={showDiv}>
@@ -81,7 +87,7 @@ export default function PostCard(){
             <div>
                 <p className="my-3 text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, commodi dolorum error hic illo inventore ipsa, iste itaque laborum maxime officiis provident, quam repellat similique soluta temporibus unde voluptas voluptatum.</p>
                 <div className="rounded-md overflow-hidden">
-                    <img src="/clay-banks-wueUmXl5TU0-unsplash.jpg" alt=""/>
+                    <img src={image} alt=""/>
                 </div>
             </div>
 
