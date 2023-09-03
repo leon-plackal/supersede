@@ -31,10 +31,10 @@ export default function Home() {
                     title={post.title}
                     image={post.image}
                     link={post.link}
+                    date={post.date}
+                    Source={post.source}
                 />
             ))}
-            {/*<PostCard></PostCard>*/}
-            {/*<PostCard></PostCard>*/}
         </BaseLayout>
     )
 }

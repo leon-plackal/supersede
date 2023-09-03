@@ -1,43 +1,55 @@
+import {fetchPostsFromReddit} from './redditAPI'
+import {interests} from "./sampleInterests";
 
-function fetchPostsFromReddit(subreddit, postCount) {
-    const redditAPIUrl = `https://www.reddit.com/r/${subreddit}/top.json?t=day&limit=${postCount}`;
-
-    return fetch(redditAPIUrl)
-        .then(response => response.json())
-        .then(data => {
-            const posts = data.data.children.map(child => {
-                const postData = child.data;
-                return {
-                    title: postData.title,
-                    image: postData.url_overridden_by_dest, // Use 'url' for non-media posts
-                    link: `https://www.reddit.com${postData.permalink}`
-                };
-            });
-            return posts;
-        });
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
 
 async function fetchPostsFromSources() {
-    try {
-        const subreddit = 'memes';
-        const postCount = 5;
+    let numberOfPostsToFetch = 0;
+    function calculateNumberOfPostsToFetch(interestLevel) {
+        if (interestLevel >= 8 && interestLevel <= 10) {
+            return 10; // High interest range
+        } else if (interestLevel >= 4 && interestLevel <= 7) {
+            return 5; // Moderate interest range
+        } else if (interestLevel >= 1 && interestLevel <= 3) {
+            return 2; // Low interest range
+        } else {
+            return 0; // Default or out-of-range value
+        }
+    }
 
-        const postsFromSource1 = await fetchPostsFromReddit(subreddit, postCount);
-        // Now, you have the Reddit posts in the 'postsFromSource1' variable
-        console.log(postsFromSource1);
+    try {
+        let allPosts = []; // Initialize allPosts as an empty array
+
+        for (const { subreddit, interestLevel } of interests) {
+            // Calculate the number of posts to fetch based on interestLevel
+            numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
+            const postsFromSource1 = await fetchPostsFromReddit(subreddit, numberOfPostsToFetch);
+            console.log(postsFromSource1);
+
+            allPosts = allPosts.concat(postsFromSource1); // Concatenate the arrays
+        }
+
+        allPosts = shuffleArray(allPosts);
+        return allPosts;
+
+
 
         // Combine posts from different sources into a single array.
-        const allPosts = [...postsFromSource1];
 
         // Store posts in local storage with a timestamp.
-        const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours from now
-        localStorage.setItem('cachedPosts', JSON.stringify({ posts: allPosts, expirationTime }));
+        // const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours from now
+        // localStorage.setItem('cachedPosts', JSON.stringify({ posts: allPosts, expirationTime }));
+        //
+        // // Initialize the seen posts list (empty initially).
+        // const seenPosts = [];
+        // localStorage.setItem('seenPosts', JSON.stringify(seenPosts));
 
-        // Initialize the seen posts list (empty initially).
-        const seenPosts = [];
-        localStorage.setItem('seenPosts', JSON.stringify(seenPosts));
-
-        return allPosts;
     } catch (error) {
         console.error('Error fetching posts:', error);
         return []; // Return an empty array on error.

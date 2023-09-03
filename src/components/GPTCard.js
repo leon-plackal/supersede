@@ -1,8 +1,9 @@
 import Card from "../components/Card";
+import Avatar from "../components/Avatar";
 import {useEffect, useState} from "react";
 import { Link } from 'react-router-dom'
 
-export default function PostCard({title, link, image, date, Source}){
+export default function PostCard({title, link, image, key, date, Source}){
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const inactiveNavStyle = "flex gap-3 py-2 my-2 hover:bg-socialBlue hover:text-white -mx-2 px-2 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-400"
 
@@ -19,6 +20,7 @@ export default function PostCard({title, link, image, date, Source}){
     // the useEffect hook is used to attach and detach the click event listener to the document object
     useEffect(() => {
         if (dropdownOpen) {
+            console.log(dropdownOpen)
             // Attach the click event listener to the document
             document.addEventListener('click', hideDiv);
 
@@ -32,6 +34,13 @@ export default function PostCard({title, link, image, date, Source}){
     return(
         <Card>
             <div className="flex gap-3 ">
+                <div>
+                    {/*<Link to='/profile'>*/}
+                    {/*    <span className="cursor-pointer">*/}
+                    {/*        <Avatar></Avatar>*/}
+                    {/*    </span>*/}
+                    {/*</Link>*/}
+                </div>
                 <div className="grow">
                     <p>
                         <Link to={'/profile'}>
@@ -59,16 +68,14 @@ export default function PostCard({title, link, image, date, Source}){
                         <div className="relative">
                             <div className="absolute w-52 right-0 bg-lCardBg dark:bg-dCardBg2 shadow-md shadow-gray-400 dark:shadow-gray-900 p-3 rounded-md">
                                 <a href="/" className={inactiveNavStyle}>
-                                    {/* Add a unique key prop here */}
-                                    <svg key="save" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                        {/* ... */}
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
                                     </svg>
                                     Save Post
                                 </a>
                                 <a href="/" className={inactiveNavStyle}>
-                                    {/* Add a unique key prop here */}
-                                    <svg key="not-interested" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                        {/* ... */}
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                     Not Interested
                                 </a>
@@ -78,6 +85,7 @@ export default function PostCard({title, link, image, date, Source}){
                 </div>
             </div>
             <div>
+                {/*<p className="my-3 text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, commodi dolorum error hic illo inventore ipsa, iste itaque laborum maxime officiis provident, quam repellat similique soluta temporibus unde voluptas voluptatum.</p>*/}
                 <div className="rounded-md mt-4 overflow-hidden">
                     <img src={image} alt=""/>
                 </div>
@@ -95,6 +103,8 @@ export default function PostCard({title, link, image, date, Source}){
                     </svg>
                 </button>
             </div>
+
+
         </Card>
     )
 }
