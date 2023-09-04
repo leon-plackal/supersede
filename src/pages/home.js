@@ -1,7 +1,7 @@
 import PostCard from "../components/PostCard";
 import BaseLayout from "../components/BaseLayout";
 import {useEffect, useState} from "react";
-import {fetchPostsFromSources} from '../components/PostLoader'
+import {fetchPostsFromSources} from '../components/PostManager'
 
 export default function Home() {
     const [posts, setPosts] = useState([]);
@@ -27,7 +27,8 @@ export default function Home() {
         <BaseLayout>
             {posts.map((post) => (
                 <PostCard
-                    key={post.id} // Ensure you have a unique key for each Card
+                    key={post.id}
+                    video={post.video}// Ensure you have a unique key for each Card
                     title={post.title}
                     image={post.image}
                     link={post.link}

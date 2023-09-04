@@ -8,20 +8,20 @@ function shuffleArray(array) {
     }
     return array;
 }
+function calculateNumberOfPostsToFetch(interestLevel) {
+    if (interestLevel >= 8 && interestLevel <= 10) {
+        return 10; // High interest range
+    } else if (interestLevel >= 4 && interestLevel <= 7) {
+        return 5; // Moderate interest range
+    } else if (interestLevel >= 1 && interestLevel <= 3) {
+        return 2; // Low interest range
+    } else {
+        return 0; // Default or out-of-range value
+    }
+}
 
 async function fetchPostsFromSources() {
     let numberOfPostsToFetch = 0;
-    function calculateNumberOfPostsToFetch(interestLevel) {
-        if (interestLevel >= 8 && interestLevel <= 10) {
-            return 10; // High interest range
-        } else if (interestLevel >= 4 && interestLevel <= 7) {
-            return 5; // Moderate interest range
-        } else if (interestLevel >= 1 && interestLevel <= 3) {
-            return 2; // Low interest range
-        } else {
-            return 0; // Default or out-of-range value
-        }
-    }
 
     try {
         let allPosts = []; // Initialize allPosts as an empty array
@@ -29,10 +29,10 @@ async function fetchPostsFromSources() {
         for (const { subreddit, interestLevel } of interests) {
             // Calculate the number of posts to fetch based on interestLevel
             numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
-            const postsFromSource1 = await fetchPostsFromReddit(subreddit, numberOfPostsToFetch);
-            console.log(postsFromSource1);
+            const postsFromReddit = await fetchPostsFromReddit(subreddit, numberOfPostsToFetch);
+            //console.log(postsFromReddit);
 
-            allPosts = allPosts.concat(postsFromSource1); // Concatenate the arrays
+            allPosts = allPosts.concat(postsFromReddit); // Concatenate the arrays
         }
 
         allPosts = shuffleArray(allPosts);
@@ -70,7 +70,7 @@ function isPostSeen(postId) {
 
 async function loadAndDisplayPosts() {
     const cachedData = JSON.parse(localStorage.getItem('cachedPosts'));
-    let posts = [];
+    let posts;
 
     if (!cachedData || new Date().getTime() > cachedData.expirationTime) {
         // Cache is empty or has expired, fetch new posts.

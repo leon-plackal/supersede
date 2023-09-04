@@ -2,10 +2,9 @@ import Card from "../components/Card";
 import {useEffect, useState} from "react";
 import { Link } from 'react-router-dom'
 
-export default function PostCard({title, link, image, date, Source}){
+export default function PostCard({title, video, link, image, date, Source}){
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const inactiveNavStyle = "flex gap-3 py-2 my-2 hover:bg-socialBlue hover:text-white -mx-2 px-2 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-400"
-
     const showDiv = () => {
         setDropdownOpen(true)
     };
@@ -37,7 +36,6 @@ export default function PostCard({title, link, image, date, Source}){
                         <Link to={'/profile'}>
                                 <span className="mr-1 text-3xl font-semibold hover:underline hover:cursor-pointer">{title}</span>
                         </Link>
-
                     </p>
                     <p className="text-lTextSecondary dark:text-dTextSecondary text-sm">{date}</p>
                 </div>
@@ -80,6 +78,9 @@ export default function PostCard({title, link, image, date, Source}){
             <div>
                 <div className="rounded-md mt-4 overflow-hidden">
                     <img src={image} alt=""/>
+                </div>
+                <div>
+                    {video}
                 </div>
             </div>
 

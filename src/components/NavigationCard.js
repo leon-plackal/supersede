@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { createClient} from "@supabase/supabase-js";
 import {useNavigate} from "react-router-dom";
-import {fetchPostsFromReddit, fetchPostsFromSources} from './PostLoader'
+import {fetchPostsFromSources} from './PostManager'
 
 const supabase = createClient("https://itaxkdkvrsdroytbpeoh.supabase.co", process.env.REACT_APP_SUPABASE_KEY)
 
