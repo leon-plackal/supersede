@@ -1,7 +1,8 @@
 import {fetchPostsFromReddit} from '../services/redditAPI'
 import fetchNewsArticles from "../services/newsAPI";
-import {Subreddits, YouTubeQueries, Articles} from "./sampleInterests";
 import RelatedVideos from "../services/YoutubeAPI";
+import ArticleGenerator from "../services/openAPI";
+import {Subreddits, YouTubeQueries, Articles, generalInterests} from "./sampleInterests";
 
 async function fetchPostsFromSources() {
     let numberOfPostsToFetch = 0;
@@ -13,7 +14,9 @@ async function fetchPostsFromSources() {
             // Calculate the number of posts to fetch based on interestLevel
             numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
             const postsFromReddit = await fetchPostsFromReddit(subreddit, numberOfPostsToFetch, false);
-            allPosts = allPosts.concat(postsFromReddit); // Concatenate the arrays
+            if (postsFromReddit){
+                allPosts = allPosts.concat(postsFromReddit); // Concatenate the arrays
+            }
         }
         // YOUTUBE
         for (const { query, interestLevel } of YouTubeQueries) {
@@ -37,12 +40,22 @@ async function fetchPostsFromSources() {
             let articles = [];
             numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
             articles = await fetchNewsArticles(newsInterest, false);
-            allPosts = allPosts.concat(articles);
+            if (articles){
+                allPosts = allPosts.concat(articles);
+            }
+        }
+
+        //OPEN AI API
+        for (const { interest } of generalInterests) {
+            let articles = [];
+            articles = await ArticleGenerator(interest, false);
+            if (articles){
+                allPosts = allPosts.concat(articles);
+            }
         }
 
         allPosts = shuffleArray(allPosts);
-        //console.log(allPosts)
-
+        console.log(allPosts)
         // Store posts in local storage with a timestamp.
         // const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours from now
         // localStorage.setItem('cachedPosts', JSON.stringify({ posts: allPosts, expirationTime }));
@@ -50,7 +63,6 @@ async function fetchPostsFromSources() {
         // // Initialize the seen posts list (empty initially).
         // const seenPosts = [];
         // localStorage.setItem('seenPosts', JSON.stringify(seenPosts));
-
         return allPosts;
 
     } catch (error) {

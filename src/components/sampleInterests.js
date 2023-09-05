@@ -1,3 +1,10 @@
+const generalInterests = [
+    {
+        userId: 'user123',
+        interest: 'API development',
+        interestLevel: 0
+    }
+];
 const Subreddits = [
     {
         userId: 'user123',
@@ -24,4 +31,4 @@ const YouTubeQueries = [
         interestLevel: 1
     }
 ];
-export {Subreddits, YouTubeQueries, Articles}
+export {Subreddits, YouTubeQueries, Articles, generalInterests}

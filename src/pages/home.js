@@ -1,9 +1,9 @@
-import PostCard from "../components/PostCard";
+import PostCard from "../components/cards/PostCard";
 import BaseLayout from "../components/BaseLayout";
 import {useEffect, useState} from "react";
 import {fetchPostsFromSources} from '../components/PostManager'
-import VideoCard from "../components/VideoCard";
-import ArticleCard from '../components/ArticleCard'
+import VideoCard from "../components/cards/VideoCard";
+import ArticleCard from '../components/cards/ArticleCard'
 export default function Home() {
     const [posts, setPosts] = useState([]);
 
@@ -31,6 +31,7 @@ export default function Home() {
                         <div key={post.id} className="content-item">
                             {post.sourceType === 'reddit' ? (
                                 <PostCard
+                                    key={post.id}
                                     video={post.video}
                                     title={post.title}
                                     image={post.image}
@@ -46,7 +47,7 @@ export default function Home() {
                                     date={post.date}
                                     channelName={post.channel}
                                 />
-                            ) : (
+                            ) : post.sourceType === 'newsArticle' ? (
                                 <ArticleCard
                                     key={post.url} // You can use the article URL as the key
                                     title={post.title}
@@ -55,6 +56,14 @@ export default function Home() {
                                     url={post.url}
                                     publishedAt={post.publishedAt}
                                     sourceName={post.sourceName}
+                                />
+                            ) : (
+                                <ArticleCard
+                                key={post.url} // You can use the article URL as the key
+                                title={post.topic}
+                                description={post.article}
+                                publishedAt="Now"
+                                sourceName="GPT"
                                 />
                             )}
                         </div>

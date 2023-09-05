@@ -1,6 +1,5 @@
 import BaseLayout from "../components/BaseLayout";
-//import '../app/globals.css';
-import PostCard from "../components/PostCard";
+import PostCard from "../components/cards/PostCard";
 
 export default function SavedPostsPage(){
     return(

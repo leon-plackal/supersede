@@ -25,7 +25,8 @@ async function fetchNewsArticles(keyword, callAPI) {
             });
 
             // Extract and return an array of news articles from the response.
-            const articles = response.data.articles.map((article) => ({
+            return response.data.articles.map((article) => ({
+                sourceType: "newsArticle",
                 title: article.title,
                 description: article.description,
                 url: article.url,
@@ -33,8 +34,6 @@ async function fetchNewsArticles(keyword, callAPI) {
                 sourceName: article.source.name,
                 imageUrl: article.urlToImage, // URL to the thumbnail image
             }));
-
-            return articles;
         } catch (error) {
             console.error('Error fetching news:', error);
             return []; // Return an empty array in case of an error
