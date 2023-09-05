@@ -1,35 +1,47 @@
 import {fetchPostsFromReddit} from '../services/redditAPI'
-import {Subreddits, YouTubeQueries} from "./sampleInterests";
+import fetchNewsArticles from "../services/newsAPI";
+import {Subreddits, YouTubeQueries, Articles} from "./sampleInterests";
+import RelatedVideos from "../services/YoutubeAPI";
 
 async function fetchPostsFromSources() {
     let numberOfPostsToFetch = 0;
     let allPosts = []; // Initialize allPosts as an empty array
 
     try {
-
+        // REDDIT
         for (const { subreddit, interestLevel } of Subreddits) {
             // Calculate the number of posts to fetch based on interestLevel
             numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
-            const postsFromReddit = await fetchPostsFromReddit(subreddit, numberOfPostsToFetch);
+            const postsFromReddit = await fetchPostsFromReddit(subreddit, numberOfPostsToFetch, false);
             allPosts = allPosts.concat(postsFromReddit); // Concatenate the arrays
         }
-        // for (const { query, interestLevel } of YouTubeQueries) {
-        //     numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
-        //     const videoIds = await RelatedVideos(query);
-        //
-        //     // Add a sourceType property to each YouTube video
-        //     const youtubePosts = videoIds.map((video) => ({
-        //         YouTubeID: video.videoId,
-        //         title: video.title,        // Add title
-        //         date: video.postedDate,  // Add posted date
-        //         channel: video.channelName,  // Add channel name
-        //         sourceType: 'youtube',
-        //     }));
-        //     allPosts = allPosts.concat(youtubePosts);
-        // }
+        // YOUTUBE
+        for (const { query, interestLevel } of YouTubeQueries) {
+            let videoIds = [];
+            numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
+            videoIds = await RelatedVideos(query, false);
+
+            if (videoIds) {
+                const youtubePosts = videoIds.map((video) => ({
+                    YouTubeID: video.videoId,
+                    title: video.title,
+                    date: video.postedDate,
+                    channel: video.channelName,
+                    sourceType: 'youtube',
+                }));
+                allPosts = allPosts.concat(youtubePosts);
+            }
+        }
+        // NEWSAPI
+        for (const { newsInterest, interestLevel } of Articles) {
+            let articles = [];
+            numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
+            articles = await fetchNewsArticles(newsInterest, false);
+            allPosts = allPosts.concat(articles);
+        }
 
         allPosts = shuffleArray(allPosts);
-        console.log(allPosts)
+        //console.log(allPosts)
 
         // Store posts in local storage with a timestamp.
         // const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours from now

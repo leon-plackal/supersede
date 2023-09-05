@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-async function RelatedVideos(query) {
-    const calling = false;
-    if(calling) {
+async function RelatedVideos(query, callAPI) {
+    if(callAPI) {
         try {
             const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
                 params: {

@@ -5,7 +5,18 @@ const Subreddits = [
         interestLevel: 0
     }
 ];
-
+const Articles = [
+    {
+        userId: 'user123',
+        newsInterest: 'technology',
+        interestLevel: 2
+    },
+    // {
+    //     userId: 'user123',
+    //     newsInterest: 'science',
+    //     interestLevel: 4
+    // }
+];
 const YouTubeQueries = [
     {
         userId: 'user123',
@@ -13,4 +24,4 @@ const YouTubeQueries = [
         interestLevel: 1
     }
 ];
-export {Subreddits, YouTubeQueries}
+export {Subreddits, YouTubeQueries, Articles}
