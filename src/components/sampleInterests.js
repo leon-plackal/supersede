@@ -1,20 +1,16 @@
 const Subreddits = [
-
-    // {
-    //     userId: 'user123',
-    //     subreddit: 'tennis',
-    //     interestLevel: 0
-    // }
-    // More entries for other user interests
+    {
+        userId: 'user123',
+        subreddit: 'tennis',
+        interestLevel: 0
+    }
 ];
 
 const YouTubeQueries = [
-
     {
         userId: 'user123',
-        query: 'tennis',
+        query: 'veritasium',
         interestLevel: 1
     }
-    // More entries for other user interests
 ];
 export {Subreddits, YouTubeQueries}

@@ -1,5 +1,5 @@
-import {timeAgo} from "./DateCoverter";
-import ConvertedVideo from './redditVideo'
+import {timeAgo} from "../components/DateCoverter";
+import ConvertedVideo from '../components/redditVideo'
 
 /**
  * Fetches posts from a specified subreddit using the Reddit API.
@@ -33,6 +33,7 @@ async function fetchPostsFromReddit(subreddit, postCount) {
                 link: `https://www.reddit.com${postData.permalink}`, // Use 'url' for non-media posts
                 source: postData.subreddit_name_prefixed,
                 title: postData.title,
+                sourceType: 'reddit',
             };
         });
         return posts;

@@ -1,6 +1,51 @@
-import {fetchPostsFromReddit} from './redditAPI'
-import RelatedVideos from "../services/YoutubeAPI";
+import {fetchPostsFromReddit} from '../services/redditAPI'
 import {Subreddits, YouTubeQueries} from "./sampleInterests";
+
+async function fetchPostsFromSources() {
+    let numberOfPostsToFetch = 0;
+    let allPosts = []; // Initialize allPosts as an empty array
+
+    try {
+
+        for (const { subreddit, interestLevel } of Subreddits) {
+            // Calculate the number of posts to fetch based on interestLevel
+            numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
+            const postsFromReddit = await fetchPostsFromReddit(subreddit, numberOfPostsToFetch);
+            allPosts = allPosts.concat(postsFromReddit); // Concatenate the arrays
+        }
+        // for (const { query, interestLevel } of YouTubeQueries) {
+        //     numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
+        //     const videoIds = await RelatedVideos(query);
+        //
+        //     // Add a sourceType property to each YouTube video
+        //     const youtubePosts = videoIds.map((video) => ({
+        //         YouTubeID: video.videoId,
+        //         title: video.title,        // Add title
+        //         date: video.postedDate,  // Add posted date
+        //         channel: video.channelName,  // Add channel name
+        //         sourceType: 'youtube',
+        //     }));
+        //     allPosts = allPosts.concat(youtubePosts);
+        // }
+
+        allPosts = shuffleArray(allPosts);
+        console.log(allPosts)
+
+        // Store posts in local storage with a timestamp.
+        // const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours from now
+        // localStorage.setItem('cachedPosts', JSON.stringify({ posts: allPosts, expirationTime }));
+        //
+        // // Initialize the seen posts list (empty initially).
+        // const seenPosts = [];
+        // localStorage.setItem('seenPosts', JSON.stringify(seenPosts));
+
+        return allPosts;
+
+    } catch (error) {
+        console.error('Error fetching posts PM:', error);
+        return []; // Return an empty array on error.
+    }
+}
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -20,47 +65,6 @@ function calculateNumberOfPostsToFetch(interestLevel) {
         return 0; // Default or out-of-range value
     }
 }
-
-async function fetchPostsFromSources() {
-    let numberOfPostsToFetch = 0;
-
-    try {
-        let allPosts = []; // Initialize allPosts as an empty array
-
-        for (const { subreddit, interestLevel } of Subreddits) {
-            // Calculate the number of posts to fetch based on interestLevel
-            numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
-            const postsFromReddit = await fetchPostsFromReddit(subreddit, numberOfPostsToFetch);
-            //console.log(postsFromReddit);
-            allPosts = allPosts.concat(postsFromReddit); // Concatenate the arrays
-        }
-        for (const { searchQuery, interestLevel } of YouTubeQueries) {
-            numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
-            const postsFromYoutube = RelatedVideos(searchQuery)
-            allPosts = allPosts.concat(postsFromYoutube);
-        }
-
-        allPosts = shuffleArray(allPosts);
-        return allPosts;
-
-
-
-        // Combine posts from different sources into a single array.
-
-        // Store posts in local storage with a timestamp.
-        // const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours from now
-        // localStorage.setItem('cachedPosts', JSON.stringify({ posts: allPosts, expirationTime }));
-        //
-        // // Initialize the seen posts list (empty initially).
-        // const seenPosts = [];
-        // localStorage.setItem('seenPosts', JSON.stringify(seenPosts));
-
-    } catch (error) {
-        console.error('Error fetching posts:', error);
-        return []; // Return an empty array on error.
-    }
-}
-
 function markPostAsSeen(postId) {
     const seenPosts = JSON.parse(localStorage.getItem('seenPosts')) || [];
     seenPosts.push(postId);
