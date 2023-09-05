@@ -1,5 +1,6 @@
 import {fetchPostsFromReddit} from './redditAPI'
-import {interests} from "./sampleInterests";
+import RelatedVideos from "../services/YoutubeAPI";
+import {Subreddits, YouTubeQueries} from "./sampleInterests";
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -26,13 +27,17 @@ async function fetchPostsFromSources() {
     try {
         let allPosts = []; // Initialize allPosts as an empty array
 
-        for (const { subreddit, interestLevel } of interests) {
+        for (const { subreddit, interestLevel } of Subreddits) {
             // Calculate the number of posts to fetch based on interestLevel
             numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
             const postsFromReddit = await fetchPostsFromReddit(subreddit, numberOfPostsToFetch);
             //console.log(postsFromReddit);
-
             allPosts = allPosts.concat(postsFromReddit); // Concatenate the arrays
+        }
+        for (const { searchQuery, interestLevel } of YouTubeQueries) {
+            numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
+            const postsFromYoutube = RelatedVideos(searchQuery)
+            allPosts = allPosts.concat(postsFromYoutube);
         }
 
         allPosts = shuffleArray(allPosts);

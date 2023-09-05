@@ -2,7 +2,7 @@ import PostCard from "../components/PostCard";
 import BaseLayout from "../components/BaseLayout";
 import {useEffect, useState} from "react";
 import {fetchPostsFromSources} from '../components/PostManager'
-
+import RelatedVideos from "../services/YoutubeAPI";
 export default function Home() {
     const [posts, setPosts] = useState([]);
 
