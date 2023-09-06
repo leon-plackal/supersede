@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import uuid from "../components/cards/uuid";
 /**
  * Fetch news articles based on a keyword using the NewsAPI.
  *
@@ -26,6 +26,7 @@ async function fetchNewsArticles(keyword, callAPI) {
 
             // Extract and return an array of news articles from the response.
             return response.data.articles.map((article) => ({
+                id: uuid(),
                 sourceType: "newsArticle",
                 title: article.title,
                 description: article.description,

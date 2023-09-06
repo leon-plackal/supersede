@@ -1,9 +1,7 @@
-import PostCard from "../components/cards/PostCard";
 import BaseLayout from "../components/BaseLayout";
 import {useEffect, useState} from "react";
 import {fetchPostsFromSources} from '../components/PostManager'
-import VideoCard from "../components/cards/VideoCard";
-import ArticleCard from '../components/cards/ArticleCard'
+import FeedCard from "../components/cards/FeedCard";
 export default function Home() {
     const [posts, setPosts] = useState([]);
 
@@ -25,31 +23,33 @@ export default function Home() {
 
     return (
         <BaseLayout>
+            {/*<FeedCard/>*/}
+            {/*<FeedCard/>*/}
             {posts.map((post) => {
                 if (post){
                     return (
                         <div key={post.id} className="content-item">
                             {post.sourceType === 'reddit' ? (
-                                <PostCard
-                                    key={post.id}
-                                    video={post.video}
+                                <FeedCard
+
+                                    videoClip={post.video}
                                     title={post.title}
-                                    image={post.image}
-                                    link={post.link}
+                                    imageUrl={post.image}
+                                    url={post.link}
                                     date={post.date}
-                                    Source={post.source}
+                                    sourceName={post.source}
                                 />
                             ) : post.sourceType === 'youtube' ? (
-                                <VideoCard
-                                    key={post.YouTubeID}
+                                <FeedCard
+
                                     videoId={post.YouTubeID}
                                     title={post.title}
                                     date={post.date}
-                                    channelName={post.channel}
+                                    sourceName={post.channel}
                                 />
                             ) : post.sourceType === 'newsArticle' ? (
-                                <ArticleCard
-                                    key={post.url} // You can use the article URL as the key
+                                <FeedCard
+
                                     title={post.title}
                                     description={post.description}
                                     imageUrl={post.imageUrl}
@@ -58,8 +58,8 @@ export default function Home() {
                                     sourceName={post.sourceName}
                                 />
                             ) : (
-                                <ArticleCard
-                                key={post.url} // You can use the article URL as the key
+                                <FeedCard
+
                                 title={post.topic}
                                 description={post.article}
                                 publishedAt="Now"

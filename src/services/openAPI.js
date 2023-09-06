@@ -1,3 +1,5 @@
+import uuid from "../components/cards/uuid";
+
 async function ArticleGenerator(inputText, callAPI) {
     if (callAPI) {
         try {
@@ -17,6 +19,7 @@ async function ArticleGenerator(inputText, callAPI) {
 
             // Modify the data to include a 'topic' field
             return {
+                id: uuid(),
                 article: data.article,
                 topic: inputText, // Add the 'topic' field and set it as the inputText
             }; // Return the modified data

@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import uuid from "../components/cards/uuid";
 async function RelatedVideos(query, callAPI) {
     if(callAPI) {
         try {
@@ -15,6 +15,7 @@ async function RelatedVideos(query, callAPI) {
 
             // Extract and return an array of video IDs from the response
             const videoIds = response.data.items.map((item) => ({
+                id: uuid(),
                 videoId: item.id.videoId,
                 title: item.snippet.title,
                 postedDate: item.snippet.publishedAt,

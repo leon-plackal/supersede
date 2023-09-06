@@ -1,6 +1,6 @@
 import {timeAgo} from "../components/DateCoverter";
 import ConvertedVideo from '../components/redditVideo'
-
+import uuid from "../components/cards/uuid";
 /**
  * Fetches posts from a specified subreddit using the Reddit API.
  * @param {string} subreddit - The name of the subreddit to fetch posts from.
@@ -27,7 +27,7 @@ async function fetchPostsFromReddit(subreddit, postCount, callAPI) {
                 }
 
                 return {
-                    id: postData.id,
+                    id: uuid(),
                     video: videoMP4,
                     date: timeAgo(postData.created),
                     image: postData.url_overridden_by_dest,

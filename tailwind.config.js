@@ -35,6 +35,9 @@ module.exports = {
         'lg': '1024px',
         'xl': '1280px',
       },
+      maxHeight: {
+        '120': '36rem', // custom maxHeight class
+      },
     },
   },
   plugins: [],
