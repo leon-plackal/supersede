@@ -9,7 +9,7 @@ const Subreddits = [
     {
         userId: 'user123',
         subreddit: 'tennis',
-        interestLevel: 4
+        interestLevel: 1
     }
 ];
 const Articles = [
