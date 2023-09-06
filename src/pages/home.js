@@ -23,8 +23,23 @@ export default function Home() {
 
     return (
         <BaseLayout>
-            {/*<FeedCard/>*/}
-            {/*<FeedCard/>*/}
+            <FeedCard
+                title="Sample"
+                description='https://unsplash.com/photos/a-person-standing-in-a-field-with-mountains-in-the-background-VXBc3QP_ek4'
+                url='https://unsplash.com/photos/a-person-standing-in-a-field-with-mountains-in-the-background-VXBc3QP_ek4'
+                date='Now'
+                sourceName='Sample'
+            />
+
+            <FeedCard
+                title="Sample"
+                description='big chuggy thnanossa'
+                url='https://unsplash.com/photos/a-person-standing-in-a-field-with-mountains-in-the-background-VXBc3QP_ek4'
+                date='Now'
+                sourceName='Sample'
+            />
+
+
             {posts.map((post) => {
                 if (post){
                     return (
