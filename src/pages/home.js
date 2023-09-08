@@ -2,9 +2,10 @@ import BaseLayout from "../components/BaseLayout";
 import {useEffect, useState} from "react";
 import {fetchPostsFromSources} from '../components/PostManager'
 import FeedCard from "../components/cards/FeedCard";
+import ConvertedVideo from "../components/redditVideo";
 export default function Home() {
     const [posts, setPosts] = useState([]);
-
+    const video = ConvertedVideo("https://v.redd.it/xw54bsknrymb1/HLSPlaylist.m3u8?a=1696766141%2CNDkyY2RkNjllZTAxMDg1ZjIwNjRiMWZkNWE0NTg1MjMwMmY0MGE2ZTdlNTk3MTY5YzQ1NTU5NjcxNDY5MDMyYQ%3D%3D&amp;v=1&amp;f=sd")
     useEffect(() => {
         async function fetchData() {
             try {
@@ -27,7 +28,7 @@ export default function Home() {
             <FeedCard
                 title="Sample"
                 description='big chuggy thnanossa'
-                imageUrl={"https://i.redd.it/exmpxrh2akmb1.jpg"}
+                videoClip={video}
                 date='Now'
                 sourceName='Sample'
             />
@@ -37,7 +38,7 @@ export default function Home() {
                 url='https://unsplash.com/photos/a-person-standing-in-a-field-with-mountains-in-the-background-VXBc3QP_ek4'
                 date='Now'
                 sourceName='Sample'
-                videoId='A6g8xc0MoiY'
+                //videoId='A6g8xc0MoiY'
             />
             <FeedCard
                 title="Sample"

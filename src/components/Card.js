@@ -6,7 +6,7 @@
  * @param {string} props.padding - Padding style for the card ('none' for no padding).
  * @param {string} props.colour - Background color for the card.
  */
-export default function Card({ children, padding, colour }) {
+export default function Card({ children, padding, colour, expand }) {
     // Define default padding and background color classes
     let pad = 'p-3 md:p-4';
     if (padding === 'none') {
@@ -18,7 +18,7 @@ export default function Card({ children, padding, colour }) {
     }
 
     // Function to close the expanded card
-    const closeExpandedCard = (card, cardClone, topY) => {
+    const closeExpandedCard = (card, cardClone) => {
         cardClone.style.transition = 'opacity 450ms ease-in-out';
         cardClone.style.opacity = '0';
 
@@ -37,6 +37,10 @@ export default function Card({ children, padding, colour }) {
 
     // Function to expand the card when clicked
     const expandCard = async (e) => {
+        if(!expand){
+            console.log("Not and expandable card!")
+            return;
+        }
         const card = e.currentTarget;
         const cardClone = card.cloneNode(true);
         const { top, left, width, height } = card.getBoundingClientRect();
@@ -47,6 +51,7 @@ export default function Card({ children, padding, colour }) {
         cardClone.style.left = left + 'px';
         cardClone.style.width = width + 'px';
         cardClone.style.height = height + 'px';
+        cardClone.pointerEvents = "auto"
 
         // Adjust styles for the inner content
         const firstDiv = cardClone.firstChild;
@@ -124,7 +129,7 @@ export default function Card({ children, padding, colour }) {
 
             // Event listener to close the expanded card when the close button is clicked
             closeButton.addEventListener('click', () => {
-                closeExpandedCard(card, cardClone, top);
+                closeExpandedCard(card, cardClone);
                 closeButton.remove();
             });
         }, 0);
