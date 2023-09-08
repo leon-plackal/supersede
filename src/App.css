@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+.card-expanded {
+  position: fixed;
+  z-index: 49;
+  top: 4rem;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  transition: width 350ms ease-in-out, height 350ms ease-in-out, left 350ms ease-in-out, top 350ms ease-in-out;
+}

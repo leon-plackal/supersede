@@ -1,3 +1,5 @@
+import {useState} from "react";
+
 /**
  * A reusable card component that can be expanded when clicked.
  *
@@ -17,131 +19,72 @@ export default function Card({ children, padding, colour, expand }) {
         bgColor = `bg-${colour}`;
     }
 
-    // Function to close the expanded card
-    const closeExpandedCard = (card, cardClone) => {
-        cardClone.style.transition = 'opacity 450ms ease-in-out';
-        cardClone.style.opacity = '0';
+    const [isExpanded, setIsExpanded] = useState(false);
 
-        // Set the original card's opacity back to 1
-        card.style.opacity = '1';
-        cardClone.addEventListener('transitionend', () => {
-            cardClone.parentNode.removeChild(cardClone);
-        });
-
-        const topDiv = card.parentNode;
-        topDiv.style.display = 'block'
-        //card.scrollIntoView(false)
-        const scrollPos = card.offsetTop - 80;
-        window.scrollTo({top: scrollPos, behavior: 'instant'});
-    };
-
-    // Function to expand the card when clicked
-    const expandCard = async (e) => {
-        if(!expand){
-            console.log("Not and expandable card!")
+    const expandCard =  (e) => {
+        if (!expand) {
+            console.log("Not an expandable card!");
             return;
         }
         const card = e.currentTarget;
-        const cardClone = card.cloneNode(true);
+
         const { top, left, width, height } = card.getBoundingClientRect();
 
-        // Set initial styles for the cloned card
-        cardClone.style.position = 'fixed';
-        cardClone.style.top = top + 'px';
-        cardClone.style.left = left + 'px';
-        cardClone.style.width = width + 'px';
-        cardClone.style.height = height + 'px';
-        cardClone.pointerEvents = "auto"
+        // Set initial styles for the card
+        card.style.position = 'fixed';
+        card.style.top = top + 'px';
+        card.style.left = left + 'px';
+        card.style.width = width + 'px';
+        card.style.height = height + 'px';
 
-        // Adjust styles for the inner content
-        const firstDiv = cardClone.firstChild;
-        firstDiv.style.maxWidth = '35rem';
-        firstDiv.style.margin = 'auto';
-
-        card.style.opacity = '0';
-        card.parentNode.parentNode.appendChild(cardClone);
-        const topDiv = card.parentNode;
-        topDiv.style.display = 'none'
-
-        // Apply transitions for the expansion animation
-        cardClone.style.transition = `
-              width 350ms ease-in-out,
-              height 350ms ease-in-out,
-              left 350ms ease-in-out,
-              top 350ms ease-in-out
-            `;
-
-        // Use setTimeout to set new styles after transitions are applied
         setTimeout(() => {
-            cardClone.style.top = '4rem';
-            cardClone.style.left = 0;
-            cardClone.style.width = '100vw';
-            cardClone.style.height = '100vh';
-
-            // Create and append the close button to the firstDiv
-            const closeButton = document.createElement('button');
-            closeButton.style = `
-                position: absolute;
-                z-index: 100;
-                top: 20px;
-                left: -20px;
-                width: 25px;
-                height: 25px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: #dedede;
-              `;
-
-            // Create the SVG element for the close button
-            const svgElement = document.createElementNS(
-                'http://www.w3.org/2000/svg',
-                'svg'
-            );
-            svgElement.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-            svgElement.setAttribute('fill', 'none');
-            svgElement.setAttribute('viewBox', '0 0 24 24');
-            svgElement.setAttribute('stroke-width', '1.5');
-            svgElement.setAttribute('stroke', '#000');
-            svgElement.setAttribute('class', 'w-4 h-4');
-
-            // Create the path element and set its attributes
-            const pathElement = document.createElementNS(
-                'http://www.w3.org/2000/svg',
-                'path'
-            );
-            pathElement.setAttribute('stroke-linecap', 'round');
-            pathElement.setAttribute('stroke-linejoin', 'round');
-            pathElement.setAttribute(
-                'd',
-                'M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3'
-            );
-
-            // Append the path element to the SVG element
-            svgElement.appendChild(pathElement);
-
-            // Append the SVG element to the closeButton
-            closeButton.appendChild(svgElement);
-
-            // Append the close button to the card
-            firstDiv.appendChild(closeButton);
-
-            // Event listener to close the expanded card when the close button is clicked
-            closeButton.addEventListener('click', () => {
-                closeExpandedCard(card, cardClone);
-                closeButton.remove();
-            });
-        }, 0);
+            card.style.top = '4rem';
+            card.style.left = '0';
+            card.style.width = '100vw';
+            card.style.height = '100vh';
+            const firstDiv = card.firstChild;
+            firstDiv.style.maxWidth = '35rem';
+            firstDiv.style.margin = 'auto';
+        },0)
+        setIsExpanded(true);
     };
+
+
+    const closeExpandedCard = (e) => {
+        e.stopPropagation()
+        const card = e.currentTarget.parentNode.parentNode;
+        card.style.position = ''
+        card.style.top = '';
+        card.style.left = '';
+        card.style.width = '';
+        card.style.height = '';
+
+        setTimeout(() => {
+            const firstDiv = card.firstChild;
+            firstDiv.style.maxWidth = '';
+            firstDiv.style.margin = '';
+        },0)
+
+        setIsExpanded(false);
+    };
+
+    const cardClassName = `... ${isExpanded ? 'card-expanded' : ''}`;
 
     return (
         <div
-            className={`${bgColor} dark:bg-dCardBg text-lTextPrimary dark:text-dTextPrimary shadow-md shadow-gray-300 dark:shadow-black rounded-md`}
+            className={`${bgColor} ${cardClassName} dark:bg-dCardBg text-lTextPrimary dark:text-dTextPrimary shadow-md shadow-gray-300 dark:shadow-black rounded-md`}
             onClick={expandCard}
         >
             <div className={`transition-all duration-500 ${pad} mb-5 relative`}>
                 {children}
+                {isExpanded && (
+                    <button
+                        className="close-button" // Add your close button styles here
+                        onClick={closeExpandedCard}
+                    >
+                        Close
+                    </button>
+                )}
             </div>
         </div>
     );
