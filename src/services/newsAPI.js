@@ -13,6 +13,7 @@ async function fetchNewsArticles(keyword, callAPI) {
 
     // Check if we should call the NewsAPI based on the 'callAPI' parameter.
     if (callAPI) {
+        console.log("Calling News API...")
         try {
             // Make an HTTP GET request to the NewsAPI endpoint.
             const response = await axios.get('https://newsapi.org/v2/everything', {

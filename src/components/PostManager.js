@@ -13,7 +13,7 @@ async function fetchPostsFromSources() {
         for (const { subreddit, interestLevel } of Subreddits) {
             // Calculate the number of posts to fetch based on interestLevel
             numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
-            const postsFromReddit = await fetchPostsFromReddit(subreddit, numberOfPostsToFetch, false);
+            const postsFromReddit = await fetchPostsFromReddit(subreddit, numberOfPostsToFetch, true);
             if (postsFromReddit){
                 allPosts = allPosts.concat(postsFromReddit); // Concatenate the arrays
             }
@@ -22,7 +22,7 @@ async function fetchPostsFromSources() {
         for (const { query, interestLevel } of YouTubeQueries) {
             let videoIds = [];
             numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
-            videoIds = await RelatedVideos(query, false);
+            videoIds = await RelatedVideos(query, true);
 
             if (videoIds) {
                 const youtubePosts = videoIds.map((video) => ({
@@ -39,7 +39,7 @@ async function fetchPostsFromSources() {
         for (const { newsInterest, interestLevel } of Articles) {
             let articles = [];
             numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
-            articles = await fetchNewsArticles(newsInterest, false);
+            articles = await fetchNewsArticles(newsInterest, true);
             if (articles){
                 allPosts = allPosts.concat(articles);
             }
@@ -48,21 +48,21 @@ async function fetchPostsFromSources() {
         //OPEN AI API
         for (const { interest } of generalInterests) {
             let articles = [];
-            articles = await ArticleGenerator(interest, false);
+            articles = await ArticleGenerator(interest, true);
             if (articles){
                 allPosts = allPosts.concat(articles);
             }
         }
 
         allPosts = shuffleArray(allPosts);
-        console.log(allPosts)
+        //console.log(allPosts)
         // Store posts in local storage with a timestamp.
-        // const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours from now
-        // localStorage.setItem('cachedPosts', JSON.stringify({ posts: allPosts, expirationTime }));
-        //
-        // // Initialize the seen posts list (empty initially).
-        // const seenPosts = [];
-        // localStorage.setItem('seenPosts', JSON.stringify(seenPosts));
+        const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours from now
+        localStorage.setItem('cachedPosts', JSON.stringify({ posts: allPosts, expirationTime }));
+
+        // Initialize the seen posts list (empty initially).
+        const seenPosts = [];
+        localStorage.setItem('seenPosts', JSON.stringify(seenPosts));
         return allPosts;
 
     } catch (error) {
@@ -89,6 +89,29 @@ function calculateNumberOfPostsToFetch(interestLevel) {
         return 0; // Default or out-of-range value
     }
 }
+
+async function getCachedPosts() {
+    const cachedData = localStorage.getItem('cachedPosts');
+    if (cachedData) {
+        const { posts, expirationTime } = JSON.parse(cachedData);
+        if (expirationTime > new Date().getTime()) {
+            return posts;
+        }
+    }
+    return null; // Cache is expired or not available
+}
+
+async function fetchPostsFromSourcesAndCache() {
+    const cachedPosts = await getCachedPosts();
+
+    if (cachedPosts) {
+        return cachedPosts;
+    } else {
+        const allPosts = await fetchPostsFromSources();
+        return allPosts;
+    }
+}
+
 function markPostAsSeen(postId) {
     const seenPosts = JSON.parse(localStorage.getItem('seenPosts')) || [];
     seenPosts.push(postId);
@@ -124,5 +147,5 @@ async function loadAndDisplayPosts() {
     });
 }
 
-export { fetchPostsFromReddit, fetchPostsFromSources };
+export { fetchPostsFromReddit, fetchPostsFromSources, fetchPostsFromSourcesAndCache };
 

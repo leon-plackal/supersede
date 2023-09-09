@@ -2,6 +2,7 @@ import axios from 'axios';
 import uuid from "../components/cards/uuid";
 async function RelatedVideos(query, callAPI) {
     if(callAPI) {
+        console.log("Calling Youtube API...")
         try {
             const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
                 params: {

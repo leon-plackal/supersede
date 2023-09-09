@@ -2,6 +2,7 @@ import uuid from "../components/cards/uuid";
 
 async function ArticleGenerator(inputText, callAPI) {
     if (callAPI) {
+        console.log("Calling Open AI API...")
         try {
             const response = await fetch('http://localhost:3001/generate-article', {
                 method: 'POST',

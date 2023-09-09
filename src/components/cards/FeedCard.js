@@ -1,12 +1,16 @@
 import Card from "../Card";
 import {useEffect, useRef, useState} from "react";
+import ConvertedVideo from "../redditVideo";
 
-export default function FeedCard({key, title, description, videoClip, imageUrl, image, date, sourceName, url, videoId}){
+export default function FeedCard({key, title, description, videoURL, imageUrl, date, sourceName, url, videoId}){
     // let expandable = true;
     // if (videoClip){
     //     expandable = false;
     // }
-
+    let videoMP4;
+    if (videoURL){
+        videoMP4 = ConvertedVideo(videoURL);
+    }
     const inactiveNavStyle = "flex gap-3 py-2 my-2 hover:bg-socialBlue hover:text-white -mx-2 px-2 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-400"
     const openInNewTab = (url, event) => {
         event.stopPropagation()
@@ -88,7 +92,7 @@ export default function FeedCard({key, title, description, videoClip, imageUrl, 
 
             <div id='content-container' className='overflow-hidden rounded-md relative mt-2'>
                 <div className="">
-                    {imageUrl && (
+                    {imageUrl &&(
                         <img className='w-full rounded-md' src={imageUrl} alt=""/>
                     )}
                 </div>
@@ -98,8 +102,8 @@ export default function FeedCard({key, title, description, videoClip, imageUrl, 
                     )}
                 </div>
                 <div className="" onClick={(e) => e.stopPropagation()}>
-                    {videoClip && (
-                        videoClip
+                    {videoURL && (
+                        videoMP4
                     )}
                 </div>
                 <div className='relative'>

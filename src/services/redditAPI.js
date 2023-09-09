@@ -9,6 +9,7 @@ import uuid from "../components/cards/uuid";
  */
 async function fetchPostsFromReddit(subreddit, postCount, callAPI) {
     if (callAPI) {
+        console.log("Calling Reddit API...")
         try {
             const redditAPIUrl = `https://www.reddit.com/r/${subreddit}/hot.json?limit=${postCount}`;
             // Top post API: const redditAPIUrl = `https://www.reddit.com/r/${subreddit}/top.json?t=day&limit=${postCount}`;
@@ -19,16 +20,15 @@ async function fetchPostsFromReddit(subreddit, postCount, callAPI) {
             const posts = data.data.children.map((child) => {
                 const postData = child.data;
 
-                let videoMP4;
+                let videoUrl;
 
                 if (postData.is_video) {
-                    const videoUrl = postData.secure_media.reddit_video.hls_url;
-                    videoMP4 = ConvertedVideo(videoUrl);
+                    videoUrl = postData.secure_media.reddit_video.hls_url;
                 }
 
                 return {
                     id: uuid(),
-                    video: videoMP4,
+                    videoURL: videoUrl,
                     date: timeAgo(postData.created),
                     image: postData.url_overridden_by_dest,
                     link: `https://www.reddit.com${postData.permalink}`, // Use 'url' for non-media posts
