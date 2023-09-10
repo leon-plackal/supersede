@@ -3,16 +3,25 @@ import {useEffect, useState} from "react";
 import {fetchPostsFromSourcesAndCache} from '../components/PostManager'
 import FeedCard from "../components/cards/FeedCard";
 import ConvertedVideo from "../components/redditVideo";
-import uuid from "../components/cards/uuid";
-import {all} from "axios";
+
 export default function Home() {
+    //TODO: when API call fails, continue others else display message that posts failed to load
     const [posts, setPosts] = useState([]);
+    const [showAllSeenNotification, setShowAllSeenNotification] = useState(false);
     const video = ConvertedVideo("https://v.redd.it/xw54bsknrymb1/HLSPlaylist.m3u8?a=1696766141%2CNDkyY2RkNjllZTAxMDg1ZjIwNjRiMWZkNWE0NTg1MjMwMmY0MGE2ZTdlNTk3MTY5YzQ1NTU5NjcxNDY5MDMyYQ%3D%3D&amp;v=1&amp;f=sd")
     useEffect(() => {
         async function loadPosts() {
             const allPosts = await fetchPostsFromSourcesAndCache();
             const seenPosts = JSON.parse(localStorage.getItem('seenPosts')) || [];
             const unseenPosts = allPosts.filter(post => !seenPosts.includes(post.id)); // Assuming each post has a unique identifier like 'id'
+            // Check if unseenPosts is empty
+            if (unseenPosts.length === 0) {
+                setShowAllSeenNotification(true);
+            } else {
+                setShowAllSeenNotification(false);
+            }
+
+
             setPosts(unseenPosts);
         }
 
@@ -22,36 +31,14 @@ export default function Home() {
         });
     }, []);
 
-    // Function to mark a post as seen
-
-
     return (
         <BaseLayout>
-            <div id='sample-key-div'>
-            {/*<FeedCard*/}
-            {/*    postID="100000"*/}
-            {/*    title="Sample"*/}
-            {/*    description='big chuggy thnanossa'*/}
-            {/*    videoClip={video}*/}
-            {/*    date='Now'*/}
-            {/*    sourceName='Sample'*/}
-            {/*/>*/}
-            {/*<FeedCard*/}
-            {/*    title="Sample"*/}
-            {/*    description='https://unsplash.com/photos/a-person-standing-in-a-field-with-mountains-in-the-background-VXBc3QP_ek4'*/}
-            {/*    url='https://unsplash.com/photos/a-person-standing-in-a-field-with-mountains-in-the-background-VXBc3QP_ek4'*/}
-            {/*    date='Now'*/}
-            {/*    sourceName='Sample'*/}
-            {/*    //videoId='A6g8xc0MoiY'*/}
-            {/*/>*/}
-            {/*<FeedCard*/}
-            {/*    title="Sample"*/}
-            {/*    description='big chuggy thnanossa'*/}
-            {/*    imageUrl={"https://i.redd.it/exmpxrh2akmb1.jpg"}*/}
-            {/*    date='Now'*/}
-            {/*    sourceName='Sample'*/}
-            {/*/>*/}
-            </div>
+            {showAllSeenNotification && (
+                <div className="all-posts-seen-notification flex justify-center text-xl font-semibold">
+                    All caught up for today!
+                </div>
+            )}
+
             {posts.map((post) => {
                 if (post){
                     return (

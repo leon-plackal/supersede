@@ -2,7 +2,7 @@ import {fetchPostsFromReddit} from '../services/redditAPI'
 import fetchNewsArticles from "../services/newsAPI";
 import RelatedVideos from "../services/YoutubeAPI";
 import ArticleGenerator from "../services/openAPI";
-import {Subreddits, YouTubeQueries, Articles, generalInterests} from "./sampleInterests";
+import {Articles, generalInterests, Subreddits, YouTubeQueries} from "./sampleInterests";
 
 async function fetchPostsFromSources() {
     let numberOfPostsToFetch = 0;
@@ -107,45 +107,9 @@ async function fetchPostsFromSourcesAndCache() {
     if (cachedPosts) {
         return cachedPosts;
     } else {
-        const allPosts = await fetchPostsFromSources();
-        return allPosts;
+        return await fetchPostsFromSources();
     }
 }
 
-function markPostAsSeen(postId) {
-    const seenPosts = JSON.parse(localStorage.getItem('seenPosts')) || [];
-    seenPosts.push(postId);
-    localStorage.setItem('seenPosts', JSON.stringify(seenPosts));
-}
-
-// Function to check if a post has been seen
-function isPostSeen(postId) {
-    const seenPosts = JSON.parse(localStorage.getItem('seenPosts')) || [];
-    return seenPosts.includes(postId);
-}
-
-async function loadAndDisplayPosts() {
-    const cachedData = JSON.parse(localStorage.getItem('cachedPosts'));
-    let posts;
-
-    if (!cachedData || new Date().getTime() > cachedData.expirationTime) {
-        // Cache is empty or has expired, fetch new posts.
-        posts = await fetchPostsFromSources();
-    } else {
-        // Use cached posts.
-        posts = cachedData.posts;
-    }
-
-    posts.forEach((post) => {
-        if (isPostSeen(post.id)) {
-            console.log(`Post with ID ${post.id} is seen.`);
-        } else {
-            console.log(`Post with ID ${post.id} is unseen.`);
-            // Mark the post as seen when it becomes visible in the viewport or based on user interaction.
-            // markPostAsSeen(post.id);
-        }
-    });
-}
-
-export { fetchPostsFromReddit, fetchPostsFromSources, fetchPostsFromSourcesAndCache };
+export { fetchPostsFromSources, fetchPostsFromSourcesAndCache };
 

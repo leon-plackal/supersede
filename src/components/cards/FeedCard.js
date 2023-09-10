@@ -16,7 +16,6 @@ export default function FeedCard({postID, title, description, videoURL, imageUrl
             localStorage.setItem('seenPosts', JSON.stringify(seenPosts));
         }
     };
-    console.log(postID)
 
     useEffect(() => {
         if (isOnScreen) {
@@ -24,7 +23,7 @@ export default function FeedCard({postID, title, description, videoURL, imageUrl
             markPostAsSeen(postID); // Assuming key is a unique identifier for the post
         }
     }, [isOnScreen]);
-    console.log({ isOnScreen });
+    //console.log({ isOnScreen });
 
     let videoMP4;
     // if (videoURL){

@@ -28,6 +28,10 @@ export default function Card({ children, padding, colour, expand }) {
         }
         const card = e.currentTarget;
 
+        //prevent scrolling of body
+        document.body.style.overflow = "hidden"
+
+        // get current position of the card to animate from
         const { top, left, width, height } = card.getBoundingClientRect();
 
         // Set initial styles for the card
@@ -58,6 +62,8 @@ export default function Card({ children, padding, colour, expand }) {
         card.style.left = '';
         card.style.width = '';
         card.style.height = '';
+
+        document.body.style.overflow = "auto"
 
         setTimeout(() => {
             const firstDiv = card.firstChild;
