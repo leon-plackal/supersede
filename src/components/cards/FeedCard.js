@@ -1,16 +1,35 @@
 import Card from "../Card";
 import {useEffect, useRef, useState} from "react";
 import ConvertedVideo from "../redditVideo";
+import {useOnScreen} from "../useOnScreen";
 
-export default function FeedCard({key, title, description, videoURL, imageUrl, date, sourceName, url, videoId}){
-    // let expandable = true;
-    // if (videoClip){
-    //     expandable = false;
-    // }
+export default function FeedCard({postID, title, description, videoURL, imageUrl, date, sourceName, url, videoId}){
+    const elementRef = useRef(null);
+    const isOnScreen = useOnScreen(elementRef);
+
+    const markPostAsSeen = (postId) => {
+        const seenPosts = JSON.parse(localStorage.getItem('seenPosts')) || [];
+        // Check if the postId is not already in the seenPosts array
+        if (!seenPosts.includes(postId)) {
+            // If it's not present, add it
+            seenPosts.push(postId);
+            localStorage.setItem('seenPosts', JSON.stringify(seenPosts));
+        }
+    };
+    console.log(postID)
+
+    useEffect(() => {
+        if (isOnScreen) {
+            // Call markPostAsSeen when the post enters the screen
+            markPostAsSeen(postID); // Assuming key is a unique identifier for the post
+        }
+    }, [isOnScreen]);
+    console.log({ isOnScreen });
+
     let videoMP4;
-    if (videoURL){
-        videoMP4 = ConvertedVideo(videoURL);
-    }
+    // if (videoURL){
+    //     videoMP4 = ConvertedVideo(videoURL);
+    // }
     const inactiveNavStyle = "flex gap-3 py-2 my-2 hover:bg-socialBlue hover:text-white -mx-2 px-2 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-400"
     const openInNewTab = (url, event) => {
         event.stopPropagation()
@@ -47,8 +66,8 @@ export default function FeedCard({key, title, description, videoURL, imageUrl, d
     };
 
     return(
-        <Card expand={true}>
-            <div id='header' className="flex gap-3">
+        <Card expand={true} >
+            <div id='header' className="flex gap-3" ref={elementRef}>
                 <div className="grow">
                     <a href={url} target="_blank" rel='noreferrer'>
                         <span className="mr-1 text-lg md:text-2xl font-semibold hover:underline hover:cursor-pointer">{title}</span>

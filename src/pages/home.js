@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {fetchPostsFromSourcesAndCache} from '../components/PostManager'
 import FeedCard from "../components/cards/FeedCard";
 import ConvertedVideo from "../components/redditVideo";
+import uuid from "../components/cards/uuid";
 import {all} from "axios";
 export default function Home() {
     const [posts, setPosts] = useState([]);
@@ -10,9 +11,9 @@ export default function Home() {
     useEffect(() => {
         async function loadPosts() {
             const allPosts = await fetchPostsFromSourcesAndCache();
-            // const seenPosts = JSON.parse(localStorage.getItem('seenPosts')) || [];
-            // const unseenPosts = allPosts.filter(post => !seenPosts.includes(post.id)); // Assuming each post has a unique identifier like 'id'
-            setPosts(allPosts);
+            const seenPosts = JSON.parse(localStorage.getItem('seenPosts')) || [];
+            const unseenPosts = allPosts.filter(post => !seenPosts.includes(post.id)); // Assuming each post has a unique identifier like 'id'
+            setPosts(unseenPosts);
         }
 
         loadPosts().catch(error => {
@@ -22,16 +23,13 @@ export default function Home() {
     }, []);
 
     // Function to mark a post as seen
-    const markPostAsSeen = (postId) => {
-        const seenPosts = JSON.parse(localStorage.getItem('seenPosts')) || [];
-        seenPosts.push(postId);
-        localStorage.setItem('seenPosts', JSON.stringify(seenPosts));
-    };
+
 
     return (
         <BaseLayout>
             <div id='sample-key-div'>
             {/*<FeedCard*/}
+            {/*    postID="100000"*/}
             {/*    title="Sample"*/}
             {/*    description='big chuggy thnanossa'*/}
             {/*    videoClip={video}*/}
@@ -60,7 +58,7 @@ export default function Home() {
                         <div key={post.id} id='feed-key-div'>
                             {post.sourceType === 'reddit' ? (
                                 <FeedCard
-
+                                    postID={post.id}
                                     videoURL={post.videoURL}
                                     title={post.title}
                                     imageUrl={post.image}
@@ -70,7 +68,7 @@ export default function Home() {
                                 />
                             ) : post.sourceType === 'youtube' ? (
                                 <FeedCard
-
+                                    postID={post.id}
                                     videoId={post.YouTubeID}
                                     title={post.title}
                                     date={post.date}
@@ -78,7 +76,7 @@ export default function Home() {
                                 />
                             ) : post.sourceType === 'newsArticle' ? (
                                 <FeedCard
-
+                                    postID={post.id}
                                     title={post.title}
                                     description={post.description}
                                     imageUrl={post.imageUrl}
@@ -88,11 +86,11 @@ export default function Home() {
                                 />
                             ) : (
                                 <FeedCard
-
-                                title={post.topic}
-                                description={post.article}
-                                publishedAt="Now"
-                                sourceName="GPT"
+                                    postID={post.id}
+                                    title={post.topic}
+                                    description={post.article}
+                                    publishedAt="Now"
+                                    sourceName="GPT"
                                 />
                             )}
                         </div>

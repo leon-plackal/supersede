@@ -22,7 +22,7 @@ async function fetchPostsFromSources() {
         for (const { query, interestLevel } of YouTubeQueries) {
             let videoIds = [];
             numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
-            videoIds = await RelatedVideos(query, true);
+            videoIds = await RelatedVideos(query, false);
 
             if (videoIds) {
                 const youtubePosts = videoIds.map((video) => ({
