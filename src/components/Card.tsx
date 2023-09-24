@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, { useState, ReactNode } from "react";
 
 /**
  * A reusable card component that can be expanded when clicked.
@@ -7,8 +7,14 @@ import {useState} from "react";
  * @param {ReactNode} props.children - The content of the card.
  * @param {string} props.padding - Padding style for the card ('none' for no padding).
  * @param {string} props.colour - Background color for the card.
+ * @param {boolean} props.expand - Whether the card can be expanded.
  */
-export default function Card({ children, padding, colour, expand }) {
+export default function Card({ children, padding, colour, expand }: {
+    children: ReactNode;
+    padding: string;
+    colour: string;
+    expand: boolean;
+}) {
     // Define default padding and background color classes
     let pad = 'p-3 md:p-4';
     if (padding === 'none') {
@@ -21,17 +27,17 @@ export default function Card({ children, padding, colour, expand }) {
 
     const [isExpanded, setIsExpanded] = useState(false);
 
-    const expandCard =  (e) => {
+    const expandCard = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!expand) {
             console.log("Not an expandable card!");
             return;
         }
-        const card = e.currentTarget;
+        const card = e.currentTarget as HTMLDivElement;
 
-        //prevent scrolling of body
-        document.body.style.overflow = "hidden"
+        // Prevent scrolling of body
+        document.body.style.overflow = "hidden";
 
-        // get current position of the card to animate from
+        // Get current position of the card to animate from
         const { top, left, width, height } = card.getBoundingClientRect();
 
         // Set initial styles for the card
@@ -46,30 +52,29 @@ export default function Card({ children, padding, colour, expand }) {
             card.style.left = '0';
             card.style.width = '100vw';
             card.style.height = '100vh';
-            const firstDiv = card.firstChild;
+            const firstDiv = card.firstChild as HTMLDivElement;
             firstDiv.style.maxWidth = '35rem';
             firstDiv.style.margin = 'auto';
-        },0)
+        }, 0);
         setIsExpanded(true);
     };
 
-
-    const closeExpandedCard = (e) => {
-        e.stopPropagation()
-        const card = e.currentTarget.parentNode.parentNode;
-        card.style.position = ''
+    const closeExpandedCard = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        const card = e.currentTarget.parentNode?.parentNode as HTMLDivElement;
+        card.style.position = '';
         card.style.top = '';
         card.style.left = '';
         card.style.width = '';
         card.style.height = '';
 
-        document.body.style.overflow = "auto"
+        document.body.style.overflow = "auto";
 
         setTimeout(() => {
-            const firstDiv = card.firstChild;
+            const firstDiv = card.firstChild as HTMLDivElement;
             firstDiv.style.maxWidth = '';
             firstDiv.style.margin = '';
-        },0)
+        }, 0);
 
         setIsExpanded(false);
     };

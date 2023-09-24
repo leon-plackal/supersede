@@ -20,7 +20,7 @@ export default function FeedCard({postID, title, description, videoURL, imageUrl
     useEffect(() => {
         if (isOnScreen) {
             // Call markPostAsSeen when the post enters the screen
-            markPostAsSeen(postID); // Assuming key is a unique identifier for the post
+            //markPostAsSeen(postID); // Assuming key is a unique identifier for the post
         }
     }, [isOnScreen]);
     //console.log({ isOnScreen });
