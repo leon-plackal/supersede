@@ -1,8 +1,8 @@
-import uuid from "../components/cards/uuid";
+import uuid from '../components/cards/uuid';
 
-async function ArticleGenerator(inputText, callAPI) {
+async function ArticleGenerator(inputText: string, callAPI: boolean) {
     if (callAPI) {
-        console.log("Calling Open AI API...")
+        console.log("Calling Open AI API...");
         try {
             const response = await fetch('http://localhost:3001/generate-article', {
                 method: 'POST',
@@ -25,8 +25,8 @@ async function ArticleGenerator(inputText, callAPI) {
                 topic: inputText, // Add the 'topic' field and set it as the inputText
             }; // Return the modified data
         } catch (error) {
-            console.error('Error generating article:', error);
-            throw error;
+            console.error('Error AI articles:', error);
+            return []; // Return an empty array in case of an error
         }
     }
 }

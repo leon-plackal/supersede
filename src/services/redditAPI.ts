@@ -1,13 +1,15 @@
-import {timeAgo} from "../components/DateCoverter";
-import ConvertedVideo from '../components/redditVideo'
-import uuid from "../components/cards/uuid";
+import { timeAgo } from "../components/DateCoverter";
+import uuid from '../components/cards/uuid';
+
+
 /**
  * Fetches posts from a specified subreddit using the Reddit API.
  * @param {string} subreddit - The name of the subreddit to fetch posts from.
  * @param {number} postCount - The number of posts to fetch.
+ * @param {boolean} callAPI - Whether to call the Reddit API to fetch posts.
  * @returns {Promise<Array<Object>>} - A Promise that resolves to an array of post objects.
  */
-async function fetchPostsFromReddit(subreddit, postCount, callAPI) {
+async function fetchPostsFromReddit(subreddit: string, postCount: number, callAPI: boolean) {
     if (callAPI) {
         console.log("Calling Reddit API...")
         try {
@@ -17,7 +19,7 @@ async function fetchPostsFromReddit(subreddit, postCount, callAPI) {
             const response = await fetch(redditAPIUrl);
             const data = await response.json();
 
-            const posts = data.data.children.map((child) => {
+            const posts = data.data.children.map((child: any) => {
                 const postData = child.data;
 
                 let videoUrl;
@@ -40,12 +42,16 @@ async function fetchPostsFromReddit(subreddit, postCount, callAPI) {
             return posts;
 
         } catch (error) {
-            console.error('Error fetching data from Reddit API:', error.message);
+            let message;
+            if (error instanceof Error) message = error.message
+            else message = String(error)
+            console.error('Error fetching data from Reddit API:', message);
+            reportError({message})
             throw error; // Re-throw the error for further handling or logging
         }
     }
+
+    return []; // Return an empty array if callAPI is false
 }
 
 export { fetchPostsFromReddit };
-
-

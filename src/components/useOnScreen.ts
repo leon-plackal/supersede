@@ -1,8 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
-export function useOnScreen(ref) {
+export function useOnScreen(ref: React.RefObject<HTMLElement>) {
     const [isOnScreen, setIsOnScreen] = useState(false);
-    const observerRef = useRef(null);
+    const observerRef = useRef<IntersectionObserver | null>(null);
 
     useEffect(() => {
         observerRef.current = new IntersectionObserver(([entry]) => {
@@ -14,10 +14,14 @@ export function useOnScreen(ref) {
     }, []);
 
     useEffect(() => {
-        observerRef.current.observe(ref.current);
+        if (observerRef.current && ref.current) {
+            observerRef.current.observe(ref.current);
+        }
 
         return () => {
-            observerRef.current.disconnect();
+            if (observerRef.current) {
+                observerRef.current.disconnect();
+            }
         };
     }, [ref]);
 

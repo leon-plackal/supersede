@@ -1,5 +1,6 @@
 import axios from 'axios';
-import uuid from "../components/cards/uuid";
+import uuid from '../components/cards/uuid';
+
 /**
  * Fetch news articles based on a keyword using the NewsAPI.
  *
@@ -7,13 +8,13 @@ import uuid from "../components/cards/uuid";
  * @param {boolean} callAPI - Whether to call the NewsAPI to fetch articles.
  * @returns {Array} An array of news articles matching the keyword.
  */
-async function fetchNewsArticles(keyword, callAPI) {
+async function fetchNewsArticles(keyword: string, callAPI: boolean) {
     // Get the API key from the environment variables.
     const apiKey = process.env.REACT_APP_NEWSAPI_KEY;
 
     // Check if we should call the NewsAPI based on the 'callAPI' parameter.
     if (callAPI) {
-        console.log("Calling News API...")
+        console.log("Calling News API...");
         try {
             // Make an HTTP GET request to the NewsAPI endpoint.
             const response = await axios.get('https://newsapi.org/v2/everything', {
@@ -26,7 +27,7 @@ async function fetchNewsArticles(keyword, callAPI) {
             });
 
             // Extract and return an array of news articles from the response.
-            return response.data.articles.map((article) => ({
+            return response.data.articles.map((article: any) => ({
                 id: uuid(),
                 sourceType: "newsArticle",
                 title: article.title,

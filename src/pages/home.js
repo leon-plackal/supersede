@@ -32,7 +32,7 @@ export default function Home() {
     }, []);
 
     return (
-        <BaseLayout>
+        <BaseLayout hideNav={false}>
             {showAllSeenNotification && (
                 <div className="all-posts-seen-notification flex justify-center text-xl font-semibold">
                     All caught up for today!

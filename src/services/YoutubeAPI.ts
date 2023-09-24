@@ -1,8 +1,9 @@
 import axios from 'axios';
-import uuid from "../components/cards/uuid";
-async function RelatedVideos(query, callAPI) {
-    if(callAPI) {
-        console.log("Calling Youtube API...")
+import uuid from '../components/cards/uuid';
+
+async function RelatedVideos(query: string, callAPI: boolean): Promise<VideoInfo[]> {
+    if (callAPI) {
+        console.log("Calling Youtube API...");
         try {
             const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
                 params: {
@@ -15,7 +16,8 @@ async function RelatedVideos(query, callAPI) {
             });
 
             // Extract and return an array of video IDs from the response
-            const videoIds = response.data.items.map((item) => ({
+            // @ts-ignore
+            const videoIds: VideoInfo[] = response.data.items.map((item) => ({
                 id: uuid(),
                 videoId: item.id.videoId,
                 title: item.snippet.title,
@@ -29,6 +31,15 @@ async function RelatedVideos(query, callAPI) {
             return []; // Return an empty array in case of an error
         }
     }
+    return [];
 }
 
 export default RelatedVideos;
+
+interface VideoInfo {
+    id: string;
+    videoId: string;
+    title: string;
+    postedDate: string;
+    channelName: string;
+}
