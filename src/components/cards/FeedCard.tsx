@@ -1,17 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Card from "../Card";
-import { useOnScreen } from "../useOnScreen";
+import Card from "./Card";
+import { useOnScreen } from "../../utilities/useOnScreen";
 
 interface FeedCardProps {
     postID: string;
-    title: string;
-    description: string;
-    videoURL: string;
-    imageUrl: string;
-    date: string;
-    sourceName: string;
-    url: string;
-    videoId: string;
+    videoURL?: string;
+    videoId?: string;
+    title?: string;
+    imageUrl?: string;
+    url?: string;
+    date?: string;
+    sourceName?: string;
+    description?: string;
+    publishedAt?: string;
 }
 
 export default function FeedCard({

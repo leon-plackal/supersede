@@ -6,4 +6,3 @@ function generateUniqueId(): string {
 }
 
 export default generateUniqueId;
-

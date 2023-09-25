@@ -31,6 +31,7 @@
     "video.js": "^8.5.2",
     "web-vitals": "^2.1.4"
   },
+  "main": "src/index.tsx",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

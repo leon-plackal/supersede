@@ -1,5 +1,5 @@
 import axios from 'axios';
-import uuid from '../components/cards/uuid';
+import uuid from '../utilities/uuid';
 
 /**
  * Fetch news articles based on a keyword using the NewsAPI.

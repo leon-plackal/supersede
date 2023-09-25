@@ -1,4 +1,4 @@
-import uuid from '../components/cards/uuid';
+import uuid from '../utilities/uuid';
 
 async function ArticleGenerator(inputText: string, callAPI: boolean) {
     if (callAPI) {

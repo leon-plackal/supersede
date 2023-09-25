@@ -1,34 +1,36 @@
 import BaseLayout from "../components/BaseLayout";
-import {useEffect, useState} from "react";
-import {fetchPostsFromSourcesAndCache} from '../components/PostManager'
+import { useEffect, useState } from "react";
+import { fetchPostsFromSourcesAndCache } from '../services/PostManager';
 import FeedCard from "../components/cards/FeedCard";
-import ConvertedVideo from "../components/redditVideo";
+import React from "react";
 
 export default function Home() {
-    //TODO: when API call fails, continue others else display message that posts failed to load
-    const [posts, setPosts] = useState([]);
-    const [showAllSeenNotification, setShowAllSeenNotification] = useState(false);
-    const video = ConvertedVideo("https://v.redd.it/xw54bsknrymb1/HLSPlaylist.m3u8?a=1696766141%2CNDkyY2RkNjllZTAxMDg1ZjIwNjRiMWZkNWE0NTg1MjMwMmY0MGE2ZTdlNTk3MTY5YzQ1NTU5NjcxNDY5MDMyYQ%3D%3D&amp;v=1&amp;f=sd")
+    // TODO: when API call fails, continue others else display message that posts failed to load
+    const [posts, setPosts] = useState<any[]>([]); // You can replace 'any[]' with the actual type of your posts
+    const [showAllSeenNotification, setShowAllSeenNotification] = useState<boolean>(false);
+
     useEffect(() => {
         async function loadPosts() {
-            const allPosts = await fetchPostsFromSourcesAndCache();
-            const seenPosts = JSON.parse(localStorage.getItem('seenPosts')) || [];
-            const unseenPosts = allPosts.filter(post => !seenPosts.includes(post.id)); // Assuming each post has a unique identifier like 'id'
-            // Check if unseenPosts is empty
-            if (unseenPosts.length === 0) {
-                setShowAllSeenNotification(true);
-            } else {
-                setShowAllSeenNotification(false);
+            try {
+                const allPosts = await fetchPostsFromSourcesAndCache();
+                const seenPostsJSON = localStorage.getItem('seenPosts');
+                const seenPosts = seenPostsJSON ? JSON.parse(seenPostsJSON) : [];
+                const unseenPosts = allPosts.filter(post => !seenPosts.includes(post.id)); // Assuming each post has a unique identifier like 'id'
+                // Check if unseenPosts is empty
+                if (unseenPosts.length === 0) {
+                    setShowAllSeenNotification(true);
+                } else {
+                    setShowAllSeenNotification(false);
+                }
+
+                setPosts(unseenPosts);
+            } catch (error) {
+                // Handle any errors here
+                console.error('Error loading posts:', error);
             }
-
-
-            setPosts(unseenPosts);
         }
 
-        loadPosts().catch(error => {
-            // Handle any errors here
-            console.error('Error loading posts:', error);
-        });
+        loadPosts();
     }, []);
 
     return (
@@ -40,7 +42,7 @@ export default function Home() {
             )}
 
             {posts.map((post) => {
-                if (post){
+                if (post) {
                     return (
                         <div key={post.id} id='feed-key-div'>
                             {post.sourceType === 'reddit' ? (
@@ -82,12 +84,9 @@ export default function Home() {
                             )}
                         </div>
                     );
-                }else{
-                    return (
-                        <div></div>
-                    )
+                } else {
+                    return null; // You can replace with appropriate rendering when post is null
                 }
-
             })}
         </BaseLayout>
     )

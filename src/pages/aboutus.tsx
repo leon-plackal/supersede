@@ -1,4 +1,4 @@
-// import '../app/globals.css';
+import React from "react";
 import BaseLayout from "../components/BaseLayout";
 
 export default function AboutUs(){

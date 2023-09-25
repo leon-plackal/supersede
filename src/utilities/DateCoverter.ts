@@ -1,4 +1,3 @@
-
 function timeAgo(timestamp: number): string {
     const now: number = new Date().getTime() / 1000; // Current timestamp in seconds
     const secondsAgo: number = Math.floor(now - timestamp);

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import uuid from '../components/cards/uuid';
+import uuid from '../utilities/uuid';
 
 async function RelatedVideos(query: string, callAPI: boolean): Promise<VideoInfo[]> {
     if (callAPI) {

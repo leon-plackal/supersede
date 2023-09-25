@@ -1,5 +1,5 @@
-import { timeAgo } from "../components/DateCoverter";
-import uuid from '../components/cards/uuid';
+import { timeAgo } from "../utilities/DateCoverter";
+import uuid from '../utilities/uuid';
 
 
 /**

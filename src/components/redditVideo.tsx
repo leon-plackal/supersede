@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
-/**
- * Video component that initializes a Video.js player.
- * @param {Object} props - Props for configuring the video player.
- * @returns {JSX.Element} - Returns a Video.js player wrapped in a React component.
- */
-const Video = (props) => {
-    const videoNode = useRef(null);
-    const [player, setPlayer] = useState(null);
+interface VideoProps {
+    [key: string]: any;
+}
+
+const Video: React.FC<VideoProps> = (props) => {
+    const videoNode = useRef<HTMLVideoElement | null>(null);
+    // @ts-ignore
+    const [player, setPlayer] = useState<videojs.Player | null>(null);
 
     useEffect(() => {
         // Create a Video.js player instance
@@ -33,12 +33,11 @@ const Video = (props) => {
     );
 };
 
-/**
- * ConvertedVideo component that displays a Video.js player with an HLS stream.
- * @param {string} HLSurl - URL of the HLS stream.
- * @returns {JSX.Element} - Returns a React component for displaying the HLS stream.
- */
-export default function ConvertedVideo(HLSurl) {
+interface ConvertedVideoProps {
+    HLSurl: string;
+}
+
+const ConvertedVideo: React.FC<ConvertedVideoProps> = ({ HLSurl }) => {
     const play = {
         fill: true,
         fluid: true,
@@ -58,4 +57,6 @@ export default function ConvertedVideo(HLSurl) {
             <Video {...play} />
         </div>
     );
-}
+};
+
+export default ConvertedVideo;

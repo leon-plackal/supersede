@@ -1,5 +1,5 @@
 import React from "react";
-import NavigationCard from "../components/NavigationCard";
+import NavigationCard from "./cards/NavigationCard";
 import Header from "../components/Header";
 import { ThemeProvider } from "next-themes";
 

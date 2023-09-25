@@ -1,10 +1,11 @@
-import { fetchPostsFromReddit } from '../services/redditAPI';
-import fetchNewsArticles from '../services/newsAPI';
-import RelatedVideos from '../services/YoutubeAPI';
-import ArticleGenerator from '../services/openAPI';
-import { Articles, generalInterests, Subreddits, YouTubeQueries } from './sampleInterests';
+import { fetchPostsFromReddit } from './redditAPI';
+import fetchNewsArticles from './newsAPI';
+import RelatedVideos from './YoutubeAPI';
+import ArticleGenerator from './openAPI';
+import { Articles, generalInterests, Subreddits, YouTubeQueries } from '../utilities/sampleInterests';
 
 interface Post {
+    id?: string;
     YouTubeID?: string;
     title: string;
     date: string;
