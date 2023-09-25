@@ -7,7 +7,7 @@ async function RelatedVideos(query: string, callAPI: boolean): Promise<VideoInfo
         try {
             const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
                 params: {
-                    key: process.env.REACT_APP_YOUTUBE_KEY,
+                    key: import.meta.env.VITE_YOUTUBE_KEY,
                     part: 'snippet',
                     maxResults: 1,
                     q: query,

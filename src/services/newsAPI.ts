@@ -10,7 +10,7 @@ import uuid from '../utilities/uuid';
  */
 async function fetchNewsArticles(keyword: string, callAPI: boolean) {
     // Get the API key from the environment variables.
-    const apiKey = process.env.REACT_APP_NEWSAPI_KEY;
+    const apiKey = import.meta.env.VITE_NEWSAPI_KEY;
 
     // Check if we should call the NewsAPI based on the 'callAPI' parameter.
     if (callAPI) {

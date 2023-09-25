@@ -4,7 +4,9 @@ import { createClient } from '@supabase/supabase-js';
 import { useNavigate } from 'react-router-dom';
 
 const supabaseUrl = 'https://itaxkdkvrsdroytbpeoh.supabase.co';
-const supabaseKey = process.env.REACT_APP_SUPABASE_KEY;
+
+const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
+//const supabaseKey = process.env.VITE_SUPABASE_KEY;
 
 if (!supabaseKey) {
     throw new Error('REACT_APP_SUPABASE_KEY is not defined in your environment.');

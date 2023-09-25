@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import BaseLayout from '../components/BaseLayout';
 import { createClient } from '@supabase/supabase-js';
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 
 // @ts-ignore
-const supabase = createClient('https://itaxkdkvrsdroytbpeoh.supabase.co', process.env.REACT_APP_SUPABASE_KEY);
+const supabase = createClient('https://itaxkdkvrsdroytbpeoh.supabase.co', import.meta.env.VITE_SUPABASE_KEY);
 
 export default function LoginPage() {
     const navigate = useNavigate();
