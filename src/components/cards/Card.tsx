@@ -11,9 +11,9 @@ import React, { useState, ReactNode } from "react";
  */
 export default function Card({ children, padding, colour, expand }: {
     children: ReactNode;
-    padding: string;
-    colour: string;
-    expand: boolean;
+    padding?: string;
+    colour?: string;
+    expand?: boolean;
 }) {
     // Define default padding and background color classes
     let pad = 'p-3 md:p-4';
@@ -83,17 +83,19 @@ export default function Card({ children, padding, colour, expand }: {
 
     return (
         <div
-            className={`${bgColor} ${cardClassName} dark:bg-dCardBg text-lTextPrimary dark:text-dTextPrimary shadow-md shadow-gray-300 dark:shadow-black rounded-md`}
+            className={`${bgColor} ${cardClassName} dark:bg-dCardBg text-lTextPrimary dark:text-dTextPrimary shadow-md shadow-gray-300 dark:shadow-black rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition-all duration-300`}
             onClick={expandCard}
         >
-            <div className={`transition-all duration-500 ${pad} mb-5 relative`}>
+            <div className={`transition-all duration-300 ${pad} mb-5 relative`}>
                 {children}
                 {isExpanded && (
                     <button
-                        className="close-button" // Add your close button styles here
+                        className="fixed bottom-4 right-4 bg-gray-300 dark:bg-gray-700 rounded-3xl md:absolute md:top-5 md:bottom-auto md:-right-10 md:left-auto " // Add your close button styles here
                         onClick={closeExpandedCard}
                     >
-                        Close
+                        <svg className={'w-10 h-10 md:w-8 md:h-8'} width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
                     </button>
                 )}
             </div>

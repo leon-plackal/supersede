@@ -9,4 +9,10 @@ export default defineConfig({
     define: {
         'process.env': {},
     },
+    server: {
+        open: true,
+    },
+    // build: {
+    //     outDir: 'build',
+    // },
 });
