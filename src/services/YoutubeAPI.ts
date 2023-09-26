@@ -1,7 +1,7 @@
 import axios from 'axios';
 import uuid from '../utilities/uuid';
 
-async function RelatedVideos(query: string, callAPI: boolean): Promise<VideoInfo[]> {
+async function RelatedVideos(query: string, callAPI: boolean): Promise<any[]> {
     if (callAPI) {
         console.log("Calling Youtube API...");
         try {
@@ -21,8 +21,9 @@ async function RelatedVideos(query: string, callAPI: boolean): Promise<VideoInfo
                 id: uuid(),
                 videoId: item.id.videoId,
                 title: item.snippet.title,
-                postedDate: item.snippet.publishedAt,
+                date: item.snippet.publishedAt,
                 channelName: item.snippet.channelTitle,
+                sourceType: 'youtube',
             }));
 
             return videoIds;

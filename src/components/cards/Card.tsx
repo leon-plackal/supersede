@@ -79,7 +79,7 @@ export default function Card({ children, padding, colour, expand }: {
         setIsExpanded(false);
     };
 
-    const cardClassName = `... ${isExpanded ? 'card-expanded' : ''}`;
+    const cardClassName = `... ${isExpanded ? 'card-expanded pb-16' : ''}`;
 
     return (
         <div

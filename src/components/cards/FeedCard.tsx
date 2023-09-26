@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Card from "./Card";
 import { useOnScreen } from "../../utilities/useOnScreen";
+import ConvertedVideo from "../redditVideo";
 
 interface FeedCardProps {
     postID: string;
@@ -48,7 +49,10 @@ export default function FeedCard({
         }
     }, [isOnScreen]);
 
-    let videoMP4: JSX.Element | null = null;
+    let videoMP4;
+    if(videoURL){
+        videoMP4 = ConvertedVideo(videoURL);
+    }
 
     const inactiveNavStyle = "flex gap-3 py-2 my-2 hover:bg-socialBlue hover:text-white -mx-2 px-2 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-400";
     const openInNewTab = (url: string, event: React.MouseEvent) => {
@@ -158,7 +162,7 @@ export default function FeedCard({
                 {/*<div className="absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-gray-200 dark:from-black to-transparent rounded-md"></div>*/}
             </div>
 
-            <div id='bottom-card-nav' className="mt-3 flex gap-7 justify-between">
+            <div id='bottom-card-nav' className="mt-3 flex gap-7 md:justify-between">
                 <button className="flex gap-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="md:w-6 md:h-6 h-5 w-5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />

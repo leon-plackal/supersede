@@ -33,12 +33,12 @@ const YouTubeQueries = [
     {
         userId: 'user123',
         query: 'veritasium',
-        interestLevel: 1
+        interestLevel: 2
     },
     {
         userId: 'user123',
         query: 'noahsnoah',
-        interestLevel: 1
+        interestLevel: 2
     }
 ];
 export {Subreddits, YouTubeQueries, Articles, generalInterests}

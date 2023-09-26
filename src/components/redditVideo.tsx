@@ -19,9 +19,9 @@ const Video: React.FC<VideoProps> = (props) => {
 
             // Dispose the player when the component is unmounted
             return () => {
-                if (player !== null) {
-                    player.dispose();
-                }
+                // if (player !== null) {
+                //     //player.dispose();
+                // }
             };
         }
     }, [props]);
@@ -33,11 +33,7 @@ const Video: React.FC<VideoProps> = (props) => {
     );
 };
 
-interface ConvertedVideoProps {
-    HLSurl: string;
-}
-
-const ConvertedVideo: React.FC<ConvertedVideoProps> = ({ HLSurl }) => {
+const ConvertedVideo = ( HLSurl: String ) => {
     const play = {
         fill: true,
         fluid: true,

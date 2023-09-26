@@ -27,19 +27,11 @@ async function fetchPostsFromSources(): Promise<Post[]> {
         }
 
         for (const { query, interestLevel } of YouTubeQueries) {
-            //let videoIds: string[] = [];
             numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
             const videoIds = await RelatedVideos(query, false);
 
             if (videoIds) {
-                const youtubePosts: Post[] = videoIds.map((video) => ({
-                    YouTubeID: video.videoId,
-                    title: video.title,
-                    date: video.postedDate,
-                    channel: video.channelName,
-                    sourceType: 'youtube',
-                }));
-                allPosts = allPosts.concat(youtubePosts);
+                allPosts = allPosts.concat(videoIds);
             }
         }
 

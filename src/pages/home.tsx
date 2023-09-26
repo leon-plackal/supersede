@@ -58,10 +58,10 @@ export default function Home() {
                             ) : post.sourceType === 'youtube' ? (
                                 <FeedCard
                                     postID={post.id}
-                                    videoId={post.YouTubeID}
+                                    videoId={post.videoId}
                                     title={post.title}
                                     date={post.date}
-                                    sourceName={post.channel}
+                                    sourceName={post.channelName}
                                 />
                             ) : post.sourceType === 'newsArticle' ? (
                                 <FeedCard
