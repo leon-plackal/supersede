@@ -1,27 +1,58 @@
-import React from 'react';
+import React, {useEffect, useState } from 'react';
 import BaseLayout from '../components/BaseLayout';
-import { createClient } from '@supabase/supabase-js';
+import {Session } from '@supabase/supabase-js';
 import { useNavigate } from 'react-router-dom';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
+import { supabaseClient } from '../supabase/supabaseclient';
 
-// @ts-ignore
-const supabase = createClient('https://itaxkdkvrsdroytbpeoh.supabase.co', import.meta.env.VITE_SUPABASE_KEY);
 
 export default function LoginPage() {
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [session, setSession] = useState<Session | null>()
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    supabase.auth.onAuthStateChange(async (event) => {
-        if (event === "SIGNED_IN") {
-            navigate("/");
-        }
-    });
-    async function loginWithGoogle() {
 
+    useEffect(() => {
+        supabaseClient.auth.getSession().then(({ data: { session } }) => {
+            setSession(session)
+        })
+
+        supabaseClient.auth.onAuthStateChange((_event, session) => {
+            setSession(session)
+        })
+    }, [])
+
+    const Login = async () => {
+        setLoading(true);
+        try {
+            const { error } = await supabaseClient.auth.signInWithPassword({
+                email,
+                password
+            })
+            if (error) throw error
+            navigate("/");
+        } catch (err) {
+            throw err;
+        } finally {
+            setEmail('')
+            setPassword('')
+            setLoading(false);
+        }
     }
+
+    const Logout = async () => {
+        const { error } = await supabaseClient.auth.signOut()
+        if (error) throw error
+    }
+
+    if (loading) return (<div>Loading...</div>)
+
 
     return (
         <BaseLayout hideNav={true}>
-            <div className="-mt-12 flex items-center h-screen">
+            <div className="flex items-center h-screen">
                 <div className="w-auto mx-auto md:w-96">
                     <div>
                         <div className="bg-white rounded-md shadow-sm dark:bg-dCardBg dark:border-gray-700">
@@ -36,7 +67,10 @@ export default function LoginPage() {
                                         </a>
                                     </p>
                                 </div>
-                                <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} providers={['google', 'discord']} />
+                                <Auth supabaseClient={supabaseClient} appearance={{ theme: ThemeSupa,       style: {
+                                        input: { background: 'white' },
+                                        //..
+                                    }, }}  providers={['google', 'discord']} />
                             </div>
                         </div>
                     </div>

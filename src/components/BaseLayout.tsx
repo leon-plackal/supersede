@@ -18,7 +18,7 @@ export default function BaseLayout({ children, hideNav }: BaseLayoutProps) {
     return (
         <ThemeProvider attribute="class">
             <Header />
-            <div className='flex justify-center bg-socialBg bg-lBgMain dark:bg-dBgMain transition-all duration-500 min-h-screen'>
+            <div className='flex justify-center bg-socialBg bg-lBgMain dark:bg-dBgMain transition-all duration-500 w-full h-full pt-16'>
                 <div className='md:flex max-w-4xl mx-4 gap-6 w-full'>
                     {!hideNav && (
                         <div className="hidden md:block md:w-1/4">

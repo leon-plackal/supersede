@@ -8,19 +8,36 @@ import Saved from './pages/saved';
 import Home from './pages/home';
 import Success from './pages/loginsuccess';
 import React from 'react';
+import { AuthProvider } from './supabase/Auth';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
     return (
         <Router>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/notifications" element={<Notifications />} />
-                <Route path="/aboutus" element={<AboutUs />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/saved" element={<Saved />} />
-                <Route path="/success" element={<Success />} />
-            </Routes>
+            <AuthProvider>
+                <Routes>
+                    <Route path="/" element={
+                        <ProtectedRoute>
+                            <Home />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/profile" element=
+                        {<ProtectedRoute>
+                            <Profile />
+                        </ProtectedRoute>} />
+                    <Route path="/notifications" element=
+                        {<ProtectedRoute>
+                            <Notifications />
+                        </ProtectedRoute>} />
+                    <Route path="/aboutus" element={<AboutUs />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/saved" element=
+                        {<ProtectedRoute>
+                            <Saved />
+                        </ProtectedRoute>} />
+                    <Route path="/success" element={<Success />} />
+                </Routes>
+            </AuthProvider>
         </Router>
     );
 }
