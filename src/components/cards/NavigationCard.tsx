@@ -99,21 +99,22 @@ export default function NavigationCard() {
             Logout
           </span>
                 </button>
-                <button className="w-full">
-          <span className={inactiveNavStyle}>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-            >
-              {/* Add SVG path data here */}
-            </svg>
-            Friends
-          </span>
-                </button>
+                <Link
+                    to="/profile"
+                    className={inactiveNavStyle}
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                    >
+                        {/* Add SVG path data here */}
+                    </svg>
+                    Profile
+                </Link>
             </div>
         </div>
     );
