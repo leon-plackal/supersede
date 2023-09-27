@@ -9,11 +9,12 @@ import React, { useState, ReactNode } from "react";
  * @param {string} props.colour - Background color for the card.
  * @param {boolean} props.expand - Whether the card can be expanded.
  */
-export default function Card({ children, padding, colour, expand }: {
+export default function Card({ children, padding, colour, expand, noHover }: {
     children: ReactNode;
     padding?: string;
     colour?: string;
     expand?: boolean;
+    noHover?: boolean;
 }) {
     // Define default padding and background color classes
     let pad = 'p-3 md:p-4';
@@ -81,9 +82,14 @@ export default function Card({ children, padding, colour, expand }: {
 
     const cardClassName = `... ${isExpanded ? 'card-expanded pb-16' : ''}`;
 
+    let hoverStyle = '';
+    if(!noHover){
+        hoverStyle = 'hover:bg-gray-200 dark:hover:bg-gray-800'
+    }
+
     return (
         <div
-            className={`${bgColor} ${cardClassName} dark:bg-dCardBg text-lTextPrimary dark:text-dTextPrimary shadow-md shadow-gray-300 dark:shadow-black rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition-all duration-300`}
+            className={`${bgColor} ${cardClassName} dark:bg-dCardBg text-lTextPrimary dark:text-dTextPrimary shadow-md shadow-gray-300 dark:shadow-black rounded-md ${hoverStyle} transition-all duration-300`}
             onClick={expandCard}
         >
             <div className={`transition-all duration-300 ${pad} mb-5 relative`}>
