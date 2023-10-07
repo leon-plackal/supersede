@@ -3,16 +3,19 @@ import { useEffect, useState } from "react";
 import { fetchPostsFromSourcesAndCache } from '../services/PostManager';
 import FeedCard from "../components/cards/FeedCard";
 import React from "react";
+import {useAuth} from "../supabase/Auth";
 
 export default function Home() {
     // TODO: when API call fails, continue others else display message that posts failed to load
     const [posts, setPosts] = useState<any[]>([]); // You can replace 'any[]' with the actual type of your posts
     const [showAllSeenNotification, setShowAllSeenNotification] = useState<boolean>(false);
 
+    const { user } = useAuth();
+
     useEffect(() => {
         async function loadPosts() {
             try {
-                const allPosts = await fetchPostsFromSourcesAndCache();
+                const allPosts = await fetchPostsFromSourcesAndCache(user);
                 const seenPostsJSON = localStorage.getItem('seenPosts');
                 const seenPosts = seenPostsJSON ? JSON.parse(seenPostsJSON) : [];
                 const unseenPosts = allPosts.filter(post => !seenPosts.includes(post.id)); // Assuming each post has a unique identifier like 'id'

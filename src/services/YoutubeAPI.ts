@@ -1,8 +1,8 @@
 import axios from 'axios';
 import uuid from '../utilities/uuid';
 
-async function RelatedVideos(query: string, callAPI: boolean): Promise<any[]> {
-    if (callAPI) {
+async function RelatedVideos(query: string): Promise<any[]> {
+
         console.log("Calling Youtube API...");
         try {
             const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
@@ -31,8 +31,6 @@ async function RelatedVideos(query: string, callAPI: boolean): Promise<any[]> {
             console.error('Error fetching related videos:', error);
             return []; // Return an empty array in case of an error
         }
-    }
-    return [];
 }
 
 export default RelatedVideos;

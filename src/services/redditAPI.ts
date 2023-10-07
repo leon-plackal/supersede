@@ -1,16 +1,8 @@
 import { timeAgo } from "../utilities/DateCoverter";
 import uuid from '../utilities/uuid';
 
+async function fetchPostsFromReddit(subreddit: string, postCount: number) {
 
-/**
- * Fetches posts from a specified subreddit using the Reddit API.
- * @param {string} subreddit - The name of the subreddit to fetch posts from.
- * @param {number} postCount - The number of posts to fetch.
- * @param {boolean} callAPI - Whether to call the Reddit API to fetch posts.
- * @returns {Promise<Array<Object>>} - A Promise that resolves to an array of post objects.
- */
-async function fetchPostsFromReddit(subreddit: string, postCount: number, callAPI: boolean) {
-    if (callAPI) {
         console.log("Calling Reddit API...")
         try {
             const redditAPIUrl = `https://www.reddit.com/r/${subreddit}/hot.json?limit=${postCount}`;
@@ -51,7 +43,7 @@ async function fetchPostsFromReddit(subreddit: string, postCount: number, callAP
         }
     }
 
-    return []; // Return an empty array if callAPI is false
-}
+
+
 
 export { fetchPostsFromReddit };

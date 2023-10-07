@@ -3,12 +3,28 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const OpenAI = require('openai');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const port = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
+
+
+// Middleware to verify the JWT token
+function verifyToken(req, res, next) {
+    const token = req.headers.authorization.split(' ')[1]; // Get the token from the Authorization header
+
+    jwt.verify(token, 'your-secret-key', (err, user) => {
+        if (err) {
+            return res.sendStatus(403); // Forbidden if the token is invalid
+        }
+        req.user = user; // Attach the user information to the request object
+        next(); // Continue with the request
+    });
+}
+
 // API route to generate articles
 app.post('/generate-article', async (req, res) => {
     try {
@@ -18,7 +34,7 @@ app.post('/generate-article', async (req, res) => {
 
         const { keywords } = req.body;
 
-        const response =  await openai.completions.create({
+        const response = await openai.completions.create({
             model: "text-davinci-003",
             prompt: `Generate an article about ${keywords}`,
             temperature: 0,

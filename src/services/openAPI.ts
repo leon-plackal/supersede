@@ -1,7 +1,6 @@
 import uuid from '../utilities/uuid';
 
-async function ArticleGenerator(inputText: string, callAPI: boolean) {
-    if (callAPI) {
+async function ArticleGenerator(inputText: string) {
         console.log("Calling Open AI API...");
         try {
             const response = await fetch('http://localhost:3001/generate-article', {
@@ -29,7 +28,6 @@ async function ArticleGenerator(inputText: string, callAPI: boolean) {
             return []; // Return an empty array in case of an error
         }
     }
-}
 
 export default ArticleGenerator;
 
