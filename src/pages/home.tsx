@@ -7,7 +7,7 @@ import {useAuth} from "../supabase/Auth";
 
 export default function Home() {
     // TODO: when API call fails, continue others else display message that posts failed to load
-    const [posts, setPosts] = useState<any[]>([]); // You can replace 'any[]' with the actual type of your posts
+    const [posts, setPosts] = useState<any[]>([]); //replace 'any[]' with the actual type of your posts
     const [showAllSeenNotification, setShowAllSeenNotification] = useState<boolean>(false);
 
     const { user } = useAuth();
@@ -15,6 +15,7 @@ export default function Home() {
     useEffect(() => {
         async function loadPosts() {
             try {
+                // @ts-ignore
                 const allPosts = await fetchPostsFromSourcesAndCache(user);
                 const seenPostsJSON = localStorage.getItem('seenPosts');
                 const seenPosts = seenPostsJSON ? JSON.parse(seenPostsJSON) : [];

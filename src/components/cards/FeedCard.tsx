@@ -2,16 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import Card from "./Card";
 import { useOnScreen } from "../../utilities/useOnScreen";
 import ConvertedVideo from "../redditVideo";
+import SavePostButton from "../SavePostButton";
 
 interface FeedCardProps {
     postID: string;
     videoURL?: string;
     videoId?: string;
-    title?: string;
+    title: string;
     imageUrl?: string;
     url?: string;
     date?: string;
-    sourceName?: string;
+    sourceName: string;
     description?: string;
     publishedAt?: string;
 }
@@ -27,6 +28,7 @@ export default function FeedCard({
                                      url,
                                      videoId
                                  }: FeedCardProps) {
+
     const elementRef = useRef<HTMLDivElement | null>(null);
     const isOnScreen = useOnScreen(elementRef);
 
@@ -163,11 +165,8 @@ export default function FeedCard({
             </div>
 
             <div id='bottom-card-nav' className="mt-3 flex gap-7 md:justify-between">
-                <button className="flex gap-2 items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="md:w-6 md:h-6 h-5 w-5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
-                    </svg>
-                </button>
+                <SavePostButton postID={postID} source={sourceName} title={title}/>
+
                 <button className="">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="md:w-6 md:h-6 h-5 w-5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />

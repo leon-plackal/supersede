@@ -2,7 +2,6 @@ import {fetchPostsFromReddit} from './redditAPI';
 import fetchNewsArticles from './newsAPI';
 import RelatedVideos from './YoutubeAPI';
 import ArticleGenerator from './openAPI';
-import {Articles, generalInterests, Subreddits, YouTubeQueries} from '../utilities/sampleInterests';
 import {supabaseClient} from "../supabase/supabaseclient";
 
 interface Post {
@@ -12,6 +11,10 @@ interface Post {
     date: string;
     channel: string;
     sourceType: string;
+}
+interface User {
+    // Define your user interface here
+    id: string;
 }
 
 async function loadPreferences(userId: string, source: string): Promise<boolean> {
@@ -40,6 +43,22 @@ async function loadPreferences(userId: string, source: string): Promise<boolean>
     }
 }
 
+const getUserInterests = async (userId: string, source:string): Promise<any[]> => {
+    const { data, error } = await supabaseClient
+        .from('user_interests')
+        .select('*')
+        .eq('user_id', userId)
+        .eq( 'source_type', source);
+
+    if (error) {
+        console.error('Error fetching interests:', error);
+    }
+    if (data){
+        return data.map((interest) => [interest.interest_name, interest.weighting_value])
+    }
+    return [];
+};
+
 async function fetchPostsFromSources(user: User): Promise<Post[]> {
     let numberOfPostsToFetch: number = 0;
     let allPosts: Post[] = [];
@@ -47,9 +66,10 @@ async function fetchPostsFromSources(user: User): Promise<Post[]> {
     if (user) {
         try {
             if (await loadPreferences(user.id, "Reddit")) {
-                for (const {subreddit, interestLevel} of Subreddits) {
-                    numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
-                    const postsFromReddit = await fetchPostsFromReddit(subreddit, numberOfPostsToFetch);
+                const Interests = await getUserInterests(user.id, "Reddit")
+                for (const interest of Interests) {
+                    numberOfPostsToFetch = calculateNumberOfPostsToFetch(interest[1]);
+                    const postsFromReddit = await fetchPostsFromReddit(interest[0].toLowerCase(), numberOfPostsToFetch);
                     if (postsFromReddit) {
                         allPosts = allPosts.concat(postsFromReddit);
                     }
@@ -57,9 +77,10 @@ async function fetchPostsFromSources(user: User): Promise<Post[]> {
             }
 
             if (await loadPreferences(user.id, "Youtube")) {
-                for (const {query, interestLevel} of YouTubeQueries) {
-                    numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
-                    const videoIds = await RelatedVideos(query);
+                const Interests = await getUserInterests(user.id, "Youtube")
+                for (const interest of Interests) {
+                    numberOfPostsToFetch = calculateNumberOfPostsToFetch(interest[1]);
+                    const videoIds = await RelatedVideos(interest[0]);
 
                     if (videoIds) {
                         allPosts = allPosts.concat(videoIds);
@@ -68,10 +89,10 @@ async function fetchPostsFromSources(user: User): Promise<Post[]> {
             }
 
             if (await loadPreferences(user.id, "News")) {
-                for (const {newsInterest, interestLevel} of Articles) {
+                const Interests = await getUserInterests(user.id, "News")
+                for (const interest of Interests) {
                     let articles: Post[] = [];
-                    numberOfPostsToFetch = calculateNumberOfPostsToFetch(interestLevel);
-                    articles = await fetchNewsArticles(newsInterest);
+                    articles = await fetchNewsArticles(interest[0], interest[1]);
                     if (articles) {
                         allPosts = allPosts.concat(articles);
                     }
@@ -79,10 +100,11 @@ async function fetchPostsFromSources(user: User): Promise<Post[]> {
             }
 
             if (await loadPreferences(user.id, "AI_Articles")) {
-                for (const {interest} of generalInterests) {
+                const Interests = await getUserInterests(user.id, "AI_Articles")
+                for (const interest of Interests) {
                     let articles: Post[] = [];
                     // @ts-ignore
-                    articles = await ArticleGenerator(interest);
+                    articles = await ArticleGenerator(interest[0]);
                     if (articles) {
                         allPosts = allPosts.concat(articles);
                     }
@@ -125,7 +147,7 @@ function calculateNumberOfPostsToFetch(interestLevel: number): number {
     } else if (interestLevel >= 1 && interestLevel <= 3) {
         return 2;
     } else {
-        return 0;
+        return 1;
     }
 }
 
@@ -138,10 +160,6 @@ async function getCachedPosts(): Promise<Post[] | null> {
         }
     }
     return null;
-}
-interface User {
-    // Define your user interface here
-    id: string;
 }
 
 async function fetchPostsFromSourcesAndCache(user: User): Promise<Post[]> {

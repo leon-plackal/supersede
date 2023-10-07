@@ -1,19 +1,22 @@
 import axios from 'axios';
 import uuid from '../utilities/uuid';
+import {formattedDate} from '../utilities/DateCoverter';
 
-async function fetchNewsArticles(keyword: string) {
+async function fetchNewsArticles(keyword: string, articleCount: number) {
     // Get the API key from the environment variables.
     const apiKey = import.meta.env.VITE_NEWSAPI_KEY;
+    const yesterdayDate = formattedDate();
 
-    console.log("Calling News API...");
+    console.log("Calling News API...", yesterdayDate);
     try {
         // Make an HTTP GET request to the NewsAPI endpoint.
         const response = await axios.get('https://newsapi.org/v2/everything', {
             params: {
                 apiKey,
                 q: keyword,
+                from: yesterdayDate,
                 language: 'en',
-                pageSize: 2, // Limit the number of articles to 2
+                pageSize: articleCount,
             },
         });
 

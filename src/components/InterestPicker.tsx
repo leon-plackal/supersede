@@ -109,7 +109,6 @@ export default function InterestPicker({ source }: {
     }
 
     useEffect(() => {
-        // Example code for fetching user interests
         const getUserInterests = async (userId: string) => {
             const { data, error } = await supabaseClient
                 .from('user_interests')
@@ -231,11 +230,11 @@ export default function InterestPicker({ source }: {
                                         if (e.key === 'Enter') {
                                             e.preventDefault();
                                             // @ts-ignore
-                                            const inputValue = e.target.value.trim(); // Get input value from event
-                                            if (inputValue !== '') {
-                                                const defaultWeightingValue = 1;
-                                                addInterest(userId, inputValue, defaultWeightingValue, source);
-                                            }
+                                                // const inputValue = e.target.value.trim(); // Get input value from event
+                                                // if (inputValue !== '') {
+                                                //     const defaultWeightingValue = 1;
+                                                //     addInterest(userId, inputValue, defaultWeightingValue, source);
+                                                // }
                                         }
                                     }}
                                 />

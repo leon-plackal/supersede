@@ -39,7 +39,7 @@ async function fetchPostsFromReddit(subreddit: string, postCount: number) {
             else message = String(error)
             console.error('Error fetching data from Reddit API:', message);
             reportError({message})
-            throw error; // Re-throw the error for further handling or logging
+            return []
         }
     }
 
