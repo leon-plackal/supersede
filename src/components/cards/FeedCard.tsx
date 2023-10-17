@@ -4,6 +4,8 @@ import { useOnScreen } from "../../utilities/useOnScreen";
 import ConvertedVideo from "../redditVideo";
 import SavePostButton from "../SavePostButton";
 import UnsavePostButton from "../UnsavePostButton";
+import { supabaseClient } from '../../supabase/supabaseclient';
+import { useAuth } from '../../supabase/Auth';
 
 interface FeedCardProps {
     postID: string;
@@ -16,7 +18,7 @@ interface FeedCardProps {
     sourceName: string;
     description?: string;
     publishedAt?: string;
-    savedPost:boolean
+    savedPost?:boolean
 }
 
 export default function FeedCard({
@@ -34,6 +36,52 @@ export default function FeedCard({
 
     const elementRef = useRef<HTMLDivElement | null>(null);
     const isOnScreen = useOnScreen(elementRef);
+    const [saved, setSaved] = useState(savedPost);
+    const { user } = useAuth();
+
+    
+    //Unsaving posts
+    const handleUnsavePost = async (event: React.MouseEvent) => {
+        event.stopPropagation();
+        try {
+            // Delete the saved post from the Supabase database
+            await supabaseClient.from('saved_posts').delete().eq('post_id', postID);
+            console.log(postID)
+            setSaved(false);
+
+        } catch (error: any) {
+            console.error('Error unsaving post:', error.message);
+        }
+    };
+
+    //saving posts
+    const handleSavePost = async (event: React.MouseEvent) => {
+        event.stopPropagation()
+        const postToSave = {
+            user_id: user?.id, // Ensure user is not null or undefined before accessing id
+            post_id: postID,
+            url: url,
+            source: sourceName,
+            title: title,
+            created_at: new Date(),
+        };
+
+        try {
+            const { data, error } = await supabaseClient.from('saved_posts').upsert([postToSave]);
+
+            if (error) {
+                console.error('Error saving post:', error.message);
+            } else {
+                console.log('Post saved successfully:', data);
+                setSaved(true)
+            }
+        } catch (error) {
+            console.error('Error saving post:');
+        }
+    };
+
+                                
+
 
     const markPostAsSeen = (postId: string) => {
         const seenPostsJSON = localStorage.getItem('seenPosts');
@@ -168,7 +216,7 @@ export default function FeedCard({
             </div>
 
             <div id='bottom-card-nav' className="mt-3 flex gap-7 md:justify-between">
-                {!savedPost? (<SavePostButton postID={postID} source={sourceName} title={title}/>) : (<UnsavePostButton postID={postID}/>)}
+                {!saved? (<button onClick={handleSavePost}><SavePostButton/></button>) : (<button onClick={handleUnsavePost}><UnsavePostButton/></button> )}
 
                 <button className="">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="md:w-6 md:h-6 h-5 w-5">

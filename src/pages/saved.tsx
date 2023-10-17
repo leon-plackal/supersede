@@ -26,14 +26,14 @@ export default function SavedPostsPage(){
         };
         fetchSavedPosts();
       }, []);
-      
+
     return(
        <BaseLayout hideNav={false}>
            <h1 className='text-3xl font-semibold mb-4 text-lTextPrimary dark:text-dTextPrimary'>Saved Posts</h1>
            {savedPosts.map((post) => (
                     <div key={post.id} id='feed-key-div'>
                         <FeedCard
-                            postID={post.id}
+                            postID={post.post_id}
                             title={post.title}
                             sourceName={post.source}
                             savedPost={true}

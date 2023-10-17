@@ -20,6 +20,7 @@ export default function Home() {
                 const seenPostsJSON = localStorage.getItem('seenPosts');
                 const seenPosts = seenPostsJSON ? JSON.parse(seenPostsJSON) : [];
                 const unseenPosts = allPosts.filter(post => !seenPosts.includes(post.id)); // Assuming each post has a unique identifier like 'id'
+                
                 // Check if unseenPosts is empty
                 if (unseenPosts.length === 0) {
                     setShowAllSeenNotification(true);
@@ -58,7 +59,7 @@ export default function Home() {
                                     url={post.link}
                                     date={post.date}
                                     sourceName={post.source}
-                                    savedPost={false}
+                                    
                                 />
                             ) : post.sourceType === 'youtube' ? (
                                 <FeedCard
@@ -67,7 +68,7 @@ export default function Home() {
                                     title={post.title}
                                     date={post.date}
                                     sourceName={post.channelName}
-                                    savedPost={false}
+                                   
                                 />
                             ) : post.sourceType === 'newsArticle' ? (
                                 <FeedCard
@@ -78,7 +79,7 @@ export default function Home() {
                                     url={post.url}
                                     publishedAt={post.publishedAt}
                                     sourceName={post.sourceName}
-                                    savedPost={false}
+                                    
                                 />
                             ) : (
                                 <FeedCard
@@ -87,7 +88,7 @@ export default function Home() {
                                     description={post.article}
                                     publishedAt="Now"
                                     sourceName="GPT"
-                                    savedPost={false}
+                                    
                                 />
                             )}
                         </div>
