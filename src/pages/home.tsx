@@ -59,7 +59,7 @@ export default function Home() {
                                     url={post.link}
                                     date={post.date}
                                     sourceName={post.source}
-                                    
+                                    sourceType={post.sourceType}
                                 />
                             ) : post.sourceType === 'youtube' ? (
                                 <FeedCard
@@ -68,9 +68,9 @@ export default function Home() {
                                     title={post.title}
                                     date={post.date}
                                     sourceName={post.channelName}
-                                   
+                                    sourceType={post.sourceType}
                                 />
-                            ) : post.sourceType === 'newsArticle' ? (
+                            ) : post.sourceType === 'news_article' ? (
                                 <FeedCard
                                     postID={post.id}
                                     title={post.title}
@@ -79,7 +79,7 @@ export default function Home() {
                                     url={post.url}
                                     date={post.date}
                                     sourceName={post.sourceName}
-                                    
+                                    sourceType={post.sourceType}
                                 />
                             ) : (
                                 <FeedCard
@@ -88,7 +88,7 @@ export default function Home() {
                                     description={post.article}
                                     date="Now"
                                     sourceName="GPT"
-                                    
+                                    sourceType={post.sourceType}
                                 />
                             )}
                         </div>

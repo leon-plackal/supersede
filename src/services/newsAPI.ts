@@ -23,13 +23,13 @@ async function fetchNewsArticles(keyword: string, articleCount: number) {
         // Extract and return an array of news articles from the response.
         return response.data.articles.map((article: any) => ({
             id: uuid(),
-            sourceType: "newsArticle",
+            sourceType: "news_article",
             title: article.title,
             description: article.description,
             url: article.url,
             date: article.publishedAt,
             sourceName: article.source.name,
-            imageUrl: article.urlToImage, // URL to the thumbnail image
+            imageUrl: article.urlToImage,
         }));
     } catch (error) {
         let message;

@@ -20,6 +20,7 @@ async function ArticleGenerator(inputText: string) {
             // Modify the data to include a 'topic' field
             return {
                 id: uuid(),
+                sourceType: "ai_article",
                 article: data.article,
                 topic: inputText, // Add the 'topic' field and set it as the inputText
             }; // Return the modified data
