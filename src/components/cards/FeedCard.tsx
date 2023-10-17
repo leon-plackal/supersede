@@ -3,6 +3,7 @@ import Card from "./Card";
 import { useOnScreen } from "../../utilities/useOnScreen";
 import ConvertedVideo from "../redditVideo";
 import SavePostButton from "../SavePostButton";
+import UnsavePostButton from "../UnsavePostButton";
 
 interface FeedCardProps {
     postID: string;
@@ -15,6 +16,7 @@ interface FeedCardProps {
     sourceName: string;
     description?: string;
     publishedAt?: string;
+    savedPost:boolean
 }
 
 export default function FeedCard({
@@ -26,7 +28,8 @@ export default function FeedCard({
                                      date,
                                      sourceName,
                                      url,
-                                     videoId
+                                     videoId,
+                                     savedPost
                                  }: FeedCardProps) {
 
     const elementRef = useRef<HTMLDivElement | null>(null);
@@ -165,7 +168,7 @@ export default function FeedCard({
             </div>
 
             <div id='bottom-card-nav' className="mt-3 flex gap-7 md:justify-between">
-                <SavePostButton postID={postID} source={sourceName} title={title}/>
+                {!savedPost? (<SavePostButton postID={postID} source={sourceName} title={title}/>) : (<UnsavePostButton postID={postID}/>)}
 
                 <button className="">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="md:w-6 md:h-6 h-5 w-5">
