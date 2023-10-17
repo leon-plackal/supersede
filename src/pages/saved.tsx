@@ -8,7 +8,7 @@ import FeedCard from "../components/cards/FeedCard";
 
 export default function SavedPostsPage(){
     const [savedPosts, setSavedPosts] = useState<any[]>([]);
-
+    
     const { user } = useAuth();
 
     useEffect(() => {
@@ -30,12 +30,18 @@ export default function SavedPostsPage(){
     return(
        <BaseLayout hideNav={false}>
            <h1 className='text-3xl font-semibold mb-4 text-lTextPrimary dark:text-dTextPrimary'>Saved Posts</h1>
-           {savedPosts.map((post) => (
+           
+           {savedPosts.slice().reverse().map((post) => (
                     <div key={post.id} id='feed-key-div'>
                         <FeedCard
                             postID={post.post_id}
-                            title={post.title}
+                            url={post.url}
                             sourceName={post.source}
+                            title={post.title}
+                            videoURL={post.vid_url}
+                            videoId={post.vid_id}
+                            imageUrl={post.img_url}
+                            description={post.description}
                             savedPost={true}
                         />
                     </div>

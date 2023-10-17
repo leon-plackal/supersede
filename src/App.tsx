@@ -10,10 +10,25 @@ import Success from './pages/loginsuccess';
 import React from 'react';
 import { AuthProvider } from './supabase/Auth';
 import ProtectedRoute from './components/ProtectedRoute';
+import toast, { Toaster } from 'react-hot-toast';
 
 function App() {
     return (
         <Router>
+            <Toaster toastOptions={{
+                success: {
+                    style: {
+                        background: '#cffce5',
+                    },
+                },
+                error: {
+                    style: {
+                        background: '#fcc0d0',
+                    },
+                },
+                
+            }}
+               />
             <AuthProvider>
                 <Routes>
                     <Route path="/" element={

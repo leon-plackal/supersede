@@ -77,7 +77,7 @@ export default function Home() {
                                     description={post.description}
                                     imageUrl={post.imageUrl}
                                     url={post.url}
-                                    publishedAt={post.publishedAt}
+                                    date={post.date}
                                     sourceName={post.sourceName}
                                     
                                 />
@@ -86,7 +86,7 @@ export default function Home() {
                                     postID={post.id}
                                     title={post.topic}
                                     description={post.article}
-                                    publishedAt="Now"
+                                    date="Now"
                                     sourceName="GPT"
                                     
                                 />

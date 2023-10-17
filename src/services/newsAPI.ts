@@ -27,12 +27,17 @@ async function fetchNewsArticles(keyword: string, articleCount: number) {
             title: article.title,
             description: article.description,
             url: article.url,
-            publishedAt: article.publishedAt,
+            date: article.publishedAt,
             sourceName: article.source.name,
             imageUrl: article.urlToImage, // URL to the thumbnail image
         }));
     } catch (error) {
-        console.error('Error fetching news:', error);
+        let message;
+        if (error instanceof Error) message = error.message;
+        else message = String(error);
+        console.error('Error fetching new API:', message);
+        reportError({message});
+
         return []; // Return an empty array in case of an error
     }
 }
