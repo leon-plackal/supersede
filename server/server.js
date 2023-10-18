@@ -26,7 +26,7 @@ function verifyToken(req, res, next) {
 }
 
 // API route to generate articles
-app.post('/generate-article', async (req, res) => {
+app.post('/generatearticle', async (req, res) => {
     try {
         const openai = new OpenAI({
             apiKey: process.env.OPENAI_API_KEY,

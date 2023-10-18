@@ -14,7 +14,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import SplashScreen from './components/splashscreen';
 
 function App() {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         // Simulate loading time with setTimeout

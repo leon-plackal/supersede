@@ -1,9 +1,9 @@
 import uuid from '../utilities/uuid';
 
 async function ArticleGenerator(inputText: string) {
-        console.log("Calling Open AI API...");
+        console.log("Calling Open AI API...", inputText);
         try {
-            const response = await fetch('http://localhost:3001/generate-article', {
+            const response = await fetch('http://localhost:3001/generatearticle', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

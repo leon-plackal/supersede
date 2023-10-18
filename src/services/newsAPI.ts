@@ -19,9 +19,8 @@ async function fetchNewsArticles(keyword: string, articleCount: number) {
             imageUrl: article.urlToImage,
         }));
     } catch (error) {
-        // Handle errors
         console.error('There has been a problem with your fetch operation:', error);
-        return []; // Return an empty array or handle the error as appropriate for your use case
+        return []; // Return an empty array on error
     }
 }
 export default fetchNewsArticles;
