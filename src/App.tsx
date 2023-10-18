@@ -7,12 +7,22 @@ import Login from './pages/login';
 import Saved from './pages/saved';
 import Home from './pages/home';
 import Success from './pages/loginsuccess';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AuthProvider } from './supabase/Auth';
 import ProtectedRoute from './components/ProtectedRoute';
 import toast, { Toaster } from 'react-hot-toast';
+import SplashScreen from './components/splashscreen';
 
 function App() {
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        // Simulate loading time with setTimeout
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 4500);
+      }, []);
+
     return (
         <Router>
             <Toaster toastOptions={{
@@ -29,6 +39,9 @@ function App() {
                 
             }}
                />
+               {isLoading ? (
+        <SplashScreen />
+      ) : (
             <AuthProvider>
                 <Routes>
                     <Route path="/" element={
@@ -53,6 +66,7 @@ function App() {
                     <Route path="/success" element={<Success />} />
                 </Routes>
             </AuthProvider>
+      )}
         </Router>
     );
 }

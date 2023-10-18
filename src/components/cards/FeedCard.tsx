@@ -43,7 +43,7 @@ export default function FeedCard({
     const [saved, setSaved] = useState(savedPost);
     const [isDivVisible, setIsDivVisible] = useState(false);
     const { user } = useAuth();
-    const inactiveNavStyle = "flex gap-3 py-2 my-2 hover:bg-socialBlue hover:text-white -mx-2 px-2 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-400";
+    const inactiveNavStyle = "flex justify-center gap-3 py-2 my-1 hover:bg-socialBlue hover:text-white -mx-2 px-2 rounded-md transition-all hover:scale-100 hover:shadow-md shadow-gray-400";
 
     //Unsaving posts
     const handleUnsavePost = async (event: React.MouseEvent) => {
@@ -192,17 +192,13 @@ export default function FeedCard({
                         </button>
                         {isDivVisible && (
                             <div className="relative z-50">
-                                <div className="absolute w-40 right-0 bg-lCardBg dark:bg-dCardBg2 shadow-md shadow-gray-400 dark:shadow-gray-900 p-1 rounded-md">
-                                    <a href="/" className={inactiveNavStyle}>
-                                        <svg key="save" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                        </svg>
-                                        Save Post
-                                    </a>
-                                    <a href="/" className={inactiveNavStyle}>
-                                        <svg key="not-interested" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                        </svg>
-                                        Not Interested
-                                    </a>
+                                <div className="absolute w-28 flex flex-col justify-center right-0 bg-lCardBg dark:bg-dCardBg2 shadow-md shadow-gray-400 dark:shadow-gray-900 p-1 rounded-md">
+                                    <button className={inactiveNavStyle}>                       
+                                        See More
+                                    </button>
+                                    <button className={inactiveNavStyle}>
+                                        See Less
+                                    </button>
                                 </div>
                             </div>
                         )}

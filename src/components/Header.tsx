@@ -17,11 +17,11 @@ export default function Header() {
     const isAuthenticated = user !== null;
 
     return (
-        <header className="fixed top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full bg-white drop-shadow-lg text-sm py-3 md:py-0 dark:bg-darkModeBlue dark:border-gray-700">
+        <header className="font-font1 fixed top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full bg-white drop-shadow-lg text-sm py-3 md:py-0 dark:bg-darkModeBlue dark:border-gray-700">
             <nav className="relative max-w-7xl w-full mx-auto px-4 md:flex md:items-center md:justify-between md:px-6 lg:px-8" aria-label="Global">
                 <div className="flex items-center justify-between">
-                    <Link className="flex-none text-xl font-semibold dark:text-white" to="/" aria-label="Brand">
-                        Supersede
+                    <Link className="flex-none text-xl font-semibold font-font2 dark:text-white" to="/" aria-label="Brand">
+                        SUPERSEDE
                     </Link>
                     <div className="md:hidden">
                         <button

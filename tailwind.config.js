@@ -39,6 +39,10 @@ module.exports = {
       maxHeight: {
         '120': '36rem', // custom maxHeight class
       },
+      fontFamily: {
+        font1: ['Inter', 'sans-serif'],
+        font2: ['Oswald', 'sans-serif'],
+      },
     },
   },
   plugins: [],
