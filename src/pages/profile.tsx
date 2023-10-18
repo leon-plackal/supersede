@@ -1,21 +1,29 @@
 import BaseLayout from "../components/BaseLayout";
 import Card from "../components/cards/Card";
-import React from "react";
-import {Button} from "@mui/material";
+import React, {useEffect, useState} from "react";
+import { Button, CircularProgress } from "@mui/material";
 import InterestPicker from "../components/InterestPicker";
-import {useAuth} from "../supabase/Auth";
+import { useAuth } from "../supabase/Auth";
 
 export default function Profile() {
     const { user } = useAuth();
 
     // Check if the user is authenticated
     const isAuthenticated = user !== null;
+    const [loading, setLoading] = useState(true);
+    
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 3000);
+        return () => clearTimeout(timer);
+    }, []);
 
     return (
         <BaseLayout hideNav={false}>
             <div className='pb-4'>
                 <h1 className="text-3xl font-semibold ">Account settings</h1>
-                {isAuthenticated? (
+                {isAuthenticated ? (
                     <p>Welcome back, {user?.email}</p>
                 ) : (
                     <p>No user Logged In!</p>
@@ -32,11 +40,16 @@ export default function Profile() {
                     </div>
                 </div>
             </Card>
+            
+            {loading && <div className="flex justify-center items-center h-96 flex-col gap-2"><CircularProgress /> Loading your interests...</div>}
+            <div style={{visibility: loading ? 'hidden' : 'visible'}}>
+                <InterestPicker source={"Reddit"} />
+                <InterestPicker source={"News"} />
+                <InterestPicker source={"Youtube"} />
+                <InterestPicker source={"AI_Articles"} />
+            </div>
+            
 
-            <InterestPicker source={"Reddit"}/>
-            <InterestPicker source={"News"}/>
-            <InterestPicker source={"Youtube"}/>
-            <InterestPicker source={"AI_Articles"}/>
 
             <Card>
                 <div>

@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { fetchPostsFromSourcesAndCache } from '../services/PostManager';
 import FeedCard from "../components/cards/FeedCard";
 import React from "react";
-import {useAuth} from "../supabase/Auth";
+import { useAuth } from "../supabase/Auth";
+import { CircularProgress } from "@mui/material";
 
 export default function Home() {
     // TODO: when API call fails, continue others else display message that posts failed to load
     const [posts, setPosts] = useState<any[]>([]); //replace 'any[]' with the actual type of your posts
     const [showAllSeenNotification, setShowAllSeenNotification] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true); // Add a loading state
 
     const { user } = useAuth();
 
@@ -20,7 +22,7 @@ export default function Home() {
                 const seenPostsJSON = localStorage.getItem('seenPosts');
                 const seenPosts = seenPostsJSON ? JSON.parse(seenPostsJSON) : [];
                 const unseenPosts = allPosts.filter(post => !seenPosts.includes(post.id)); // Assuming each post has a unique identifier like 'id'
-                
+
                 // Check if unseenPosts is empty
                 if (unseenPosts.length === 0) {
                     setShowAllSeenNotification(true);
@@ -29,6 +31,7 @@ export default function Home() {
                 }
 
                 setPosts(unseenPosts);
+                setIsLoading(false); // Set loading state to false once posts are loaded
             } catch (error) {
                 // Handle any errors here
                 console.error('Error loading posts:', error);
@@ -45,58 +48,62 @@ export default function Home() {
                     All caught up for today!
                 </div>
             )}
+            {isLoading ? ( // Conditionally render a loader while loading
+                <div className="flex justify-center items-center h-96 flex-col gap-2"><CircularProgress /> Loading your posts...</div>
+            ) : (
+                <div>{posts.map((post) => {
+                    if (post) {
+                        return (
+                            <div key={post.id} id='feed-key-div'>
+                                {post.sourceType === 'reddit' ? (
+                                    <FeedCard
+                                        postID={post.id}
+                                        videoURL={post.videoURL}
+                                        title={post.title}
+                                        imageUrl={post.image}
+                                        url={post.link}
+                                        date={post.date}
+                                        sourceName={post.source}
+                                        sourceType={post.sourceType}
+                                    />
+                                ) : post.sourceType === 'youtube' ? (
+                                    <FeedCard
+                                        postID={post.id}
+                                        videoId={post.videoId}
+                                        title={post.title}
+                                        date={post.date}
+                                        sourceName={post.channelName}
+                                        sourceType={post.sourceType}
+                                    />
+                                ) : post.sourceType === 'news_article' ? (
+                                    <FeedCard
+                                        postID={post.id}
+                                        title={post.title}
+                                        description={post.description}
+                                        imageUrl={post.imageUrl}
+                                        url={post.url}
+                                        date={post.date}
+                                        sourceName={post.sourceName}
+                                        sourceType={post.sourceType}
+                                    />
+                                ) : (
+                                    <FeedCard
+                                        postID={post.id}
+                                        title={post.topic}
+                                        description={post.article}
+                                        date="Now"
+                                        sourceName="GPT"
+                                        sourceType={post.sourceType}
+                                    />
+                                )}
+                            </div>
+                        );
+                    } else {
+                        return null; // You can replace with appropriate rendering when post is null
+                    }
+                })}</div>
+            )}
 
-            {posts.map((post) => {
-                if (post) {
-                    return (
-                        <div key={post.id} id='feed-key-div'>
-                            {post.sourceType === 'reddit' ? (
-                                <FeedCard
-                                    postID={post.id}
-                                    videoURL={post.videoURL}
-                                    title={post.title}
-                                    imageUrl={post.image}
-                                    url={post.link}
-                                    date={post.date}
-                                    sourceName={post.source}
-                                    sourceType={post.sourceType}
-                                />
-                            ) : post.sourceType === 'youtube' ? (
-                                <FeedCard
-                                    postID={post.id}
-                                    videoId={post.videoId}
-                                    title={post.title}
-                                    date={post.date}
-                                    sourceName={post.channelName}
-                                    sourceType={post.sourceType}
-                                />
-                            ) : post.sourceType === 'news_article' ? (
-                                <FeedCard
-                                    postID={post.id}
-                                    title={post.title}
-                                    description={post.description}
-                                    imageUrl={post.imageUrl}
-                                    url={post.url}
-                                    date={post.date}
-                                    sourceName={post.sourceName}
-                                    sourceType={post.sourceType}
-                                />
-                            ) : (
-                                <FeedCard
-                                    postID={post.id}
-                                    title={post.topic}
-                                    description={post.article}
-                                    date="Now"
-                                    sourceName="GPT"
-                                    sourceType={post.sourceType}
-                                />
-                            )}
-                        </div>
-                    );
-                } else {
-                    return null; // You can replace with appropriate rendering when post is null
-                }
-            })}
         </BaseLayout>
     )
 }
