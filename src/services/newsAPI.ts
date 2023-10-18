@@ -1,20 +1,14 @@
-import axios from 'axios';
 import uuid from '../utilities/uuid';
-import {formattedDate} from '../utilities/DateCoverter';
 
 async function fetchNewsArticles(keyword: string, articleCount: number) {
-    // Get the API key from the environment variables.
-    const apiKey = import.meta.env.VITE_NEWSAPI_KEY;
-    const yesterdayDate = formattedDate();
     console.log("Calling News API...");
-    
     try {
-        // Make an HTTP GET request to the NewsAPI endpoint.
-        const response = await axios.get(`https://newsapi.org/v2/everything?q=${keyword}&from=${yesterdayDate}&sortBy=popularity&apiKey=${apiKey}&language=en&pageSize=${articleCount}`, {
-        });
-
-        // Extract and return an array of news articles from the response.
-        return response.data.articles.map((article: any) => ({
+        const response = await fetch(`http://localhost:3001/newsarticles?keyword=${keyword}&articleCount=${articleCount}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data.articles.map((article: any) => ({
             id: uuid(),
             sourceType: "news_article",
             title: article.title,
@@ -25,14 +19,9 @@ async function fetchNewsArticles(keyword: string, articleCount: number) {
             imageUrl: article.urlToImage,
         }));
     } catch (error) {
-        let message;
-        if (error instanceof Error) message = error.message;
-        else message = String(error);
-        console.error('Error fetching new API:', message);
-        reportError({message});
-
-        return []; // Return an empty array in case of an error
+        // Handle errors
+        console.error('There has been a problem with your fetch operation:', error);
+        return []; // Return an empty array or handle the error as appropriate for your use case
     }
 }
-
 export default fetchNewsArticles;
