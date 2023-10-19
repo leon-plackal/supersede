@@ -147,7 +147,6 @@ export default function FeedCard({
 
     // Toggle the dropdown menu
     const toggleDiv = (e: React.MouseEvent) => {
-        console.log("toggle pressed");
         e.stopPropagation();
         setIsDivVisible(!isDivVisible);
     };

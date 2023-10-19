@@ -43,6 +43,7 @@ export default function SavedPostsPage(){
                             imageUrl={post.img_url}
                             description={post.description}
                             savedPost={true}
+                            sourceType=""
                         />
                     </div>
                     ))}

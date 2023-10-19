@@ -24,7 +24,7 @@ export default function Profile() {
             <div className='pb-4'>
                 <h1 className="text-3xl font-semibold ">Account settings</h1>
                 {isAuthenticated ? (
-                    <p>Welcome back, {user?.email}</p>
+                    <p>Welcome back, {user?.user_metadata.name}</p>
                 ) : (
                     <p>No user Logged In!</p>
                 )}

@@ -9,8 +9,7 @@ async function RelatedVideos(query: string): Promise<any[]> {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.log(data);
-
+        
         const videoArray: VideoInfo[] = data.items.map((item: any) => ({
             id: uuid(),
             videoId: item.id.videoId,

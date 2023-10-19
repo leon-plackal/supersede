@@ -50,7 +50,7 @@ export default function Header() {
                         {/* TODO: add the styling for dark mode above and below Links, Link conditional not working */}
                         {isAuthenticated ? (
                             <div>
-                                <div>{user?.email}</div>
+                                <div>{user?.user_metadata.name}</div>
                                 {/*<img src={user?.user_metadata.avatar_url} alt="User Avatar" />*/}
                             </div>
 

@@ -30,7 +30,6 @@ export default function Card({ children, padding, colour, expand, noHover }: {
 
     const expandCard = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!expand) {
-            console.log("Not an expandable card!");
             return;
         }
         const card = e.currentTarget as HTMLDivElement;

@@ -1,27 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { createClient } from '@supabase/supabase-js';
 import { useNavigate } from 'react-router-dom';
+import { supabaseClient } from '../../supabase/supabaseclient';
 
-const supabaseUrl = 'https://itaxkdkvrsdroytbpeoh.supabase.co';
-
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
-//const supabaseKey = process.env.VITE_SUPABASE_KEY;
-
-if (!supabaseKey) {
-    throw new Error('REACT_APP_SUPABASE_KEY is not defined in your environment.');
-}
-
-const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default function NavigationCard() {
     const navigate = useNavigate();
 
     async function logout() {
-        const { error } = await supabase.auth.signOut();
+        const { error } = await supabaseClient.auth.signOut();
     }
 
-    supabase.auth.onAuthStateChange(async (event) => {
+    supabaseClient.auth.onAuthStateChange(async (event) => {
         if (event === 'SIGNED_OUT') {
             navigate('/login');
         }
