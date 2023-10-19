@@ -88,14 +88,14 @@ export default function Card({ children, padding, colour, expand, noHover }: {
 
     return (
         <div
-            className={`${bgColor} ${cardClassName} dark:bg-dCardBg text-lTextPrimary dark:text-dTextPrimary shadow-md shadow-gray-300 dark:shadow-black rounded-md ${hoverStyle} transition-all duration-300`}
+            className={`${bgColor} ${cardClassName} dark:bg-dCardBg text-lTextPrimary dark:text-dTextPrimary shadow-md shadow-gray-300 dark:shadow-gray-950 rounded-md ${hoverStyle} transition-all duration-300`}
             onClick={expandCard}
         >
-            <div className={`transition-all duration-300 ${pad} mb-5 relative`}>
+            <div className={`transition-all duration-300 ${pad} mb-5`}>
                 {children}
                 {isExpanded && (
                     <button
-                        className="fixed bottom-4 right-4 bg-gray-300 dark:bg-gray-700 rounded-3xl md:absolute md:top-5 md:bottom-auto md:-right-10 md:left-auto " // Add your close button styles here
+                        className="fixed bottom-4 right-4 bg-gray-400 dark:bg-gray-700 rounded-3xl md:fixed md:top-24 md:bottom-auto md:right-10 md:left-auto " // Add your close button styles here
                         onClick={closeExpandedCard}
                     >
                         <svg className={'w-10 h-10 md:w-8 md:h-8'} width="16" height="16" fill="currentColor" viewBox="0 0 16 16">

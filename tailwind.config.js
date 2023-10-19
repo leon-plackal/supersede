@@ -8,14 +8,14 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-        lBgMain:'#F9F7F7',
-        dBgMain:'#0a0a0a',
+        lBgMain:'#efeeee',
+        dBgMain:'#171717',
 
         socialBlue: '#218DFA',
         darkModeBlue: '#0f172a',
 
         dNavBg: '#1c1b22',
-        lNavBg: '#EEEEEE',
+        lNavBg: '#e7e7e9',
 
         dCardBg: '#0f172a',
         lCardBg: '#F9F7F7',

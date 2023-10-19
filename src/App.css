@@ -32,10 +32,12 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 .card-expanded {
   overflow-y: scroll;
   z-index: 49;
@@ -47,8 +49,8 @@
   transition: width 350ms ease-in-out, height 350ms ease-in-out, left 350ms ease-in-out, top 350ms ease-in-out;
 }
 
-@media screen and (max-width: 640px){
-  .card-expanded{
+@media screen and (max-width: 640px) {
+  .card-expanded {
     /*top: 3rem !important;*/
     margin-top: -1rem;
     padding-top: 1rem;
@@ -56,16 +58,21 @@
 }
 
 .logo {
-  opacity: 0; /* Initially, set the opacity to 0 */
-  animation: fadeIn 2.5s ease forwards; /* Animation duration and easing */
+  opacity: 0;
+  /* Initially, set the opacity to 0 */
+  animation: fadeIn 2.5s ease forwards;
+  /* Animation duration and easing */
 }
 
 @keyframes fadeIn {
   from {
-    opacity: 0; /* Start with opacity 0 */
+    opacity: 0;
+    /* Start with opacity 0 */
   }
+
   to {
-    opacity: 1; /* End with opacity 1 */
+    opacity: 1;
+    /* End with opacity 1 */
   }
 }
 
@@ -78,6 +85,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -92,7 +100,25 @@
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
+  }
+}
+
+
+.dialogfadein {
+  animation: fadeInZoom 0.1s ease-out;
+}
+
+@keyframes fadeInZoom {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

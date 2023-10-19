@@ -22,7 +22,7 @@ export default function Profile() {
     return (
         <BaseLayout hideNav={false}>
             <div className='pb-4'>
-                <h1 className="text-3xl font-semibold ">Account settings</h1>
+                <h1 className="text-3xl font-semibold ">Your Preferences</h1>
                 {isAuthenticated ? (
                     <p>Welcome back, {user?.user_metadata.name}</p>
                 ) : (
@@ -30,16 +30,11 @@ export default function Profile() {
                 )}
 
             </div>
-            <Card padding={'none'} colour={""} expand={false}>
-                <div className="relative">
-                    <div className="h-36 overflow-hidden flex justify-center items-center rounded-md">
-                        <img src="/clay-banks-wueUmXl5TU0-unsplash.jpg" alt="" />
-                    </div>
-                    <div className='absolute bottom-2 left-2'>
-                        <h1 className='font-semibold text-2xl text-lTextPrimary dark:text-dTextPrimary'>Display Name</h1>
-                    </div>
-                </div>
-            </Card>
+            
+            <div className="mb-4 text-sm">
+                <p className="mb-1">Please enter your interests here. You may choose interests from the dropdown menu, or type in your own and press enter. Use the switch to toggle whether or not you would like to see posts from that particular source.</p>
+                <p>Supersede works best when you break down your interests into one or two conside words, please avoid using sentences. When typing interests for Reddit, please specify valid subreddits, or the interest will not return any posts as of now.</p>
+            </div>
             
             {loading && <div className="flex justify-center items-center h-96 flex-col gap-2"><CircularProgress /> Loading your interests...</div>}
             <div style={{visibility: loading ? 'hidden' : 'visible'}}>
@@ -48,18 +43,13 @@ export default function Profile() {
                 <InterestPicker source={"Youtube"} />
                 <InterestPicker source={"AI_Articles"} />
             </div>
-            
-
-
-            <Card>
+            {/* <Card>
                 <div>
                     <h2>Your Account</h2>
                     <p>Would you like to delete your account? WARNING: This cannot be undone!</p>
                     <Button variant="outlined" color="error">DELETE</Button>
                 </div>
-
-            </Card>
-
+            </Card> */}
         </BaseLayout>
     );
 }

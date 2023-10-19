@@ -81,13 +81,11 @@ export default function FeedCard({
             if (error) {
                 console.error('Error saving post:', error.message);
             } else {
-                console.log('Post saved successfully:', data);
                 toast.success('Post saved');
                 setSaved(true)
             }
         } catch (error) {
             toast.error('Error saving post');
-            console.error('Error saving post:');
         }
     };
 
@@ -205,7 +203,7 @@ export default function FeedCard({
                 </div>
             </div>
 
-            <div id='content-container' className='overflow-hidden rounded-md relative mt-2'>
+            <div id='content-container' className='overflow-hidden rounded-md  mt-2'>
                 <div className="">
                     {imageUrl && (
                         <img className='w-full rounded-md' src={imageUrl} alt="" />
