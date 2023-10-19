@@ -3,7 +3,7 @@ import uuid from '../utilities/uuid';
 async function ArticleGenerator(inputText: string) {
         console.log("Calling Open AI API...", inputText);
         try {
-            const response = await fetch('http://localhost:3001/generatearticle', {
+            const response = await fetch(`${import.meta.env.VITE_BASEURL}/generatearticle`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

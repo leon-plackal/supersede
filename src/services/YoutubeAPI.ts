@@ -4,7 +4,7 @@ async function RelatedVideos(query: string): Promise<any[]> {
 
     console.log("Calling Youtube API...");
     try {
-        const response = await fetch(`http://localhost:3001/youtubevideos?query=${query}`);
+        const response = await fetch(`${import.meta.env.VITE_BASEURL}/youtubevideos?query=${query}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

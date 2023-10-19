@@ -3,7 +3,7 @@ import uuid from '../utilities/uuid';
 async function fetchNewsArticles(keyword: string, articleCount: number) {
     console.log("Calling News API...");
     try {
-        const response = await fetch(`http://localhost:3001/newsarticles?keyword=${keyword}&articleCount=${articleCount}`);
+        const response = await fetch(`${import.meta.env.VITE_BASEURL}/newsarticles?keyword=${keyword}&articleCount=${articleCount}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

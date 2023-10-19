@@ -5,7 +5,7 @@ async function fetchPostsFromReddit(subreddit: string, postCount: number) {
 
     console.log("Calling Reddit API...")
     try {
-        const response = await fetch(`http://localhost:3001/redditposts?subreddit=${subreddit}&postCount=${postCount}`);
+        const response = await fetch(`${import.meta.env.VITE_BASEURL}/redditposts?subreddit=${subreddit}&postCount=${postCount}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
