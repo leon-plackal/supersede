@@ -105,8 +105,8 @@ export default function FeedCard({
     // Call markPostAsSeen when the post enters the screen
     useEffect(() => {
         if (isOnScreen) {
-            // Call markPostAsSeen when the post enters the screen TODO: re-enable
-            //markPostAsSeen(postID); // Assuming key is a unique identifier for the post
+            //Call markPostAsSeen when the post enters the screen
+            markPostAsSeen(postID); // Assuming key is a unique identifier for the post
         }
     }, [isOnScreen]);
 

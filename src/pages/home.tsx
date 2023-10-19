@@ -1,24 +1,35 @@
 import BaseLayout from "../components/BaseLayout";
 import { useEffect, useState } from "react";
-import { fetchPostsFromSourcesAndCache } from '../services/PostManager';
+import { fetchPostsFromSourcesAndCache, clearCache } from '../services/PostManager';
 import FeedCard from "../components/cards/FeedCard";
 import React from "react";
 import { useAuth } from "../supabase/Auth";
 import { CircularProgress } from "@mui/material";
 
 export default function Home() {
-    // TODO: when API call fails, continue others else display message that posts failed to load
-    const [posts, setPosts] = useState<any[]>([]); //replace 'any[]' with the actual type of your posts
+    const [posts, setPosts] = useState<any[]>([]);
     const [showAllSeenNotification, setShowAllSeenNotification] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true); // Add a loading state
-
+    const [loadFailed, setLoadFailed] = useState<boolean>(false); // Add a failed Load state
     const { user } = useAuth();
 
+    const handleRefresh = async () => {
+        // Clear the cache for 'cached posts'
+        clearCache();
+        // Reload the page
+        window.location.reload();
+    };
     useEffect(() => {
         async function loadPosts() {
+            if(user)
             try {
-                // @ts-ignore
+                // Fetch posts from sources and cache them
                 const allPosts = await fetchPostsFromSourcesAndCache(user);
+                if (allPosts.length === 0) {
+                    setLoadFailed(true)
+                    setIsLoading(false)
+                    return
+                }
                 const seenPostsJSON = localStorage.getItem('seenPosts');
                 const seenPosts = seenPostsJSON ? JSON.parse(seenPostsJSON) : [];
                 const unseenPosts = allPosts.filter(post => !seenPosts.includes(post.id)); // Assuming each post has a unique identifier like 'id'
@@ -33,7 +44,7 @@ export default function Home() {
                 setPosts(unseenPosts);
                 setIsLoading(false); // Set loading state to false once posts are loaded
             } catch (error) {
-                // Handle any errors here
+                // Handle error
                 console.error('Error loading posts:', error);
             }
         }
@@ -44,8 +55,18 @@ export default function Home() {
     return (
         <BaseLayout hideNav={false}>
             {showAllSeenNotification && (
-                <div className="all-posts-seen-notification flex justify-center text-xl font-semibold">
-                    All caught up for today!
+                <div className="flex flex-col justify-center items-center ">
+                    <div className="text-xl font-semibold">All caught up for today...</div>
+                    <p className="mt-4 text-sm w-3/4 text-center">Come back tomorrow for more posts! You are limited to 50 posts a day. Don't go opening Reddit now...</p>
+                </div>
+            )}
+            {loadFailed && (
+                <div className="flex flex-col justify-center items-center">
+                    <div className="text-xl font-semibold">Internal Server Error: Failed to load posts</div>
+                    <p className="mt-4 text-sm w-2/4 text-center">We may be experiencing some server issues. Try refreshing the page.</p>
+                    <button onClick={handleRefresh} className=" bg-blue-300 dark:bg-blue-800 p-1 px-2 rounded-sm font-normal text-sm mt-4">
+                        Refresh
+                    </button>
                 </div>
             )}
             {isLoading ? ( // Conditionally render a loader while loading

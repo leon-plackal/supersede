@@ -172,4 +172,8 @@ async function fetchPostsFromSourcesAndCache(user: User): Promise<Post[]> {
     }
 }
 
-export { fetchPostsFromSources, fetchPostsFromSourcesAndCache };
+function clearCache() {
+    localStorage.removeItem('cachedPosts');
+}
+
+export { fetchPostsFromSources, fetchPostsFromSourcesAndCache, clearCache };

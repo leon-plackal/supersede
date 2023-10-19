@@ -32,11 +32,11 @@ const LogoutButton = () => {
             {isLogoutDialogVisible && (     
                 <div className="fixed px-4 min-h-screen top-0 left-0 right-0 md:flex md:items-center md:justify-center dialogfadein z-50">
                     <div className="opacity-25 w-full h-full absolute inset-0"></div>
-                    <div className="bg-white dark:bg-dBgMain rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative drop-shadow-md">
+                    <div className="bg-white dark:bg-gray-800 rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative drop-shadow-md">
                         <div className="md:flex items-center">
                             <div className="text-lTextPrimary dark:text-dTextPrimary mt-4 md:mt-0 text-center md:text-left">
                                 <p className="font-bold">Logout?</p>
-                                <p className="text-sm text-gray-700 mt-1">You must sign in again to access your account.
+                                <p className="text-sm text-gray-700 dark:text-gray-200 mt-1">You must sign in again to access your account.
                                 </p>
                             </div>
                         </div>

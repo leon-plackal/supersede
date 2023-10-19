@@ -13,10 +13,10 @@ export default function Header() {
     const { user } = useAuth();
     // Check if the user is authenticated
     let isAuthenticated = false;
-    if(user){
+    if (user) {
         isAuthenticated = true;
     }
-    else{
+    else {
         isAuthenticated = false;
     }
     //const isAuthenticated = user !== null;
@@ -75,13 +75,10 @@ export default function Header() {
                             </button>
                         }
 
-                        {/* TODO: add the styling for dark mode above and below Links, Link conditional not working */}
                         {isAuthenticated ? (
                             <div>
-                                <div className='dark:text-dTextSecondary'>Welcome, {user?.user_metadata.name}</div>
-                                {/*<img src={user?.user_metadata.avatar_url} alt="User Avatar" />*/}
+                                <div className='dark:text-dTextSecondary text-lTextSecondary'>Welcome, {user?.user_metadata.name}</div>
                             </div>
-
                         ) : (
                             <Link className="flex items-center gap-x-2 font-medium text-lightPrimary dark:text-dTextSecondary hover:text-blue-600 md:border-l md:border-gray-300 md:my-6 md:pl-6 dark:border-gray-700 dark:hover:text-blue-500" to="/login">
                                 <svg className="w-4 h-4 hidden md:block" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
