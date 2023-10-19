@@ -49,11 +49,11 @@ export default function AboutUs(){
                                     </p>
                                     <p className="mt-1 text-gray-600 dark:text-gray-400 pb-2">
                                         {/* eslint-disable-next-line react/no-unescaped-entities */}
-                                        2. Endless Learning: Say goodbye to the guilt of wasted time. [Your App Name] encourages you to explore the world of general knowledge, science, and current events. Our content is sourced from reputable outlets to ensure that you're not just consuming information but also enhancing your understanding of the world.
+                                        2. Endless Learning: Say goodbye to the guilt of wasted time. Supersede encourages you to explore the world of general knowledge, science, and current events. Our content is sourced from reputable outlets to ensure that you're not just consuming information but also enhancing your understanding of the world.
                                     </p>
                                     <p className="mt-1 text-gray-600 dark:text-gray-400 pb-2">
                                         {/* eslint-disable-next-line react/no-unescaped-entities */}
-                                        3. Mitigating Aimless Scrolling: We're on a mission to make scrolling meaningful. [Your App Name] is designed to captivate your attention with a purpose. As you scroll through our feed, you'll uncover fascinating tidbits of information, engaging stories, and aha moments that make your time online truly worthwhile.
+                                        3. Mitigating Aimless Scrolling: We're on a mission to make scrolling meaningful. Supersede is designed to captivate your attention with a purpose. As you scroll through our feed, you'll uncover fascinating tidbits of information, engaging stories, and aha moments that make your time online truly worthwhile.
                                     </p>
                                 </div>
                             </div>
@@ -69,11 +69,11 @@ export default function AboutUs(){
                                         Join the Supersede Community
                                     </h3>
                                     <p className="mt-1 text-gray-600 dark:text-gray-400">
-                                        We invite you to be part of a community that values curiosity, enlightenment, and the pursuit of knowledge. Whether you're a student, a professional, or simply someone with an insatiable appetite for learning, [Your App Name] offers a space where you can scroll with intention.
+                                        We invite you to be part of a community that values curiosity, enlightenment, and the pursuit of knowledge. Whether you're a student, a professional, or simply someone with an insatiable appetite for learning, Supersede offers a space where you can scroll with intention.
 
                                         Together, let's turn your screen time into a valuable investment in yourself. Discover the joy of learning, the thrill of knowledge, and the satisfaction of informed scrolling.
 
-                                        Thank you for choosing [Your App Name] as your scrolling companion. Let's embark on this journey of discovery together.
+                                        Thank you for choosing Supersede as your scrolling companion. Let's embark on this journey of discovery together.
                                     </p>
                                 </div>
                             </div>
