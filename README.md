@@ -7,7 +7,9 @@ They can then receive relevant posts each day from these sources. Supersede hold
 therefore the app has no comments, likes or profiles to lure you away into the trap of social media. You are limited to 50 posts a day
 and they will be reset every 24 hours unless saved.
 
-Furthermore, users may choose to mark certain posts as interesting or irrelevant, thus fine-tuning their future results the more they use the app!
+Features coming soon: Users may choose to mark certain posts as interesting or irrelevant, thus fine-tuning their future results the more they use the app!
+
+This project has been deployed: [Supersede](https://supersede.pages.dev/).
 
 ## Getting Started
 
