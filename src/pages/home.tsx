@@ -4,7 +4,7 @@ import { fetchPostsFromSourcesAndCache, clearCache } from '../services/PostManag
 import FeedCard from "../components/cards/FeedCard";
 import React from "react";
 import { useAuth } from "../supabase/Auth";
-import { CircularProgress } from "@mui/material";
+import LoaderSquare from "../components/LoaderSquare";
 
 export default function Home() {
     const [posts, setPosts] = useState<any[]>([]);
@@ -64,13 +64,13 @@ export default function Home() {
                 <div className="flex flex-col justify-center items-center">
                     <div className="text-xl font-semibold">Internal Server Error: Failed to load posts</div>
                     <p className="mt-4 text-sm w-2/4 text-center">We may be experiencing some server issues. Try refreshing the page.</p>
-                    <button onClick={handleRefresh} className=" bg-blue-300 dark:bg-blue-800 p-1 px-2 rounded-sm font-normal text-sm mt-4">
+                    <button onClick={handleRefresh} className=" bg-blue-600 dark:bg-blue-800 p-1 px-2 rounded-sm font-normal text-white text-sm mt-4">
                         Refresh
                     </button>
                 </div>
             )}
             {isLoading ? ( // Conditionally render a loader while loading
-                <div className="flex justify-center items-center h-96 flex-col gap-2"><CircularProgress /> Loading your posts...</div>
+                <div className="flex justify-center items-center h-96 flex-col gap-2"><LoaderSquare message="Loading your posts..."/></div>
             ) : (
                 <div>{posts.map((post) => {
                     if (post) {

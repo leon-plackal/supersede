@@ -1,9 +1,8 @@
 import BaseLayout from "../components/BaseLayout";
-import Card from "../components/cards/Card";
 import React, {useEffect, useState} from "react";
-import { Button, CircularProgress } from "@mui/material";
 import InterestPicker from "../components/InterestPicker";
 import { useAuth } from "../supabase/Auth";
+import LoaderSquare from "../components/LoaderSquare";
 
 export default function Profile() {
     const { user } = useAuth();
@@ -36,7 +35,7 @@ export default function Profile() {
                 <p>Supersede works best when you break down your interests into one or two conside words, please avoid using sentences. When typing interests for Reddit, please specify valid subreddits, or the interest will not return any posts as of now.</p>
             </div>
             
-            {loading && <div className="flex justify-center items-center h-96 flex-col gap-2"><CircularProgress /> Loading your interests...</div>}
+            {loading && <div className="flex justify-center items-center h-96 flex-col gap-2"><LoaderSquare message="Loading your profile..."/></div>}
             <div style={{visibility: loading ? 'hidden' : 'visible'}}>
                 <InterestPicker source={"Reddit"} />
                 <InterestPicker source={"News"} />
