@@ -111,6 +111,17 @@ async function fetchPostsFromSources(user: User): Promise<Post[]> {
                 }
             }
 
+            // If no posts were found, fetch some default posts
+            if (allPosts.length === 0) {
+                allPosts.concat(await fetchPostsFromReddit("tennis", 5))
+                allPosts.concat(await fetchPostsFromReddit("funky", 10))
+                allPosts.concat(await fetchPostsFromReddit("animals", 10))
+                allPosts.concat(await fetchNewsArticles("global warming", 15))
+                allPosts.concat(await RelatedVideos("Nature"))
+                allPosts.concat(await RelatedVideos("Cats"))
+                // @ts-ignore
+                allPosts.concat(await ArticleGenerator("Nature"))
+            }
             allPosts = shuffleArray(allPosts);
 
             const expirationTime: number = new Date().getTime() + 24 * 60 * 60 * 1000;

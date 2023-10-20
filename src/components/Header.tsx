@@ -33,7 +33,7 @@ export default function Header() {
     });
 
     return (
-        <header className="font-font1 fixed top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full bg-white drop-shadow-lg text-sm py-3 md:py-0 dark:bg-darkModeBlue dark:border-gray-700">
+        <header className="font-font1 fixed top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full bg-white drop-shadow-lg text-sm py-3 md:py-0 dark:bg-headerBg dark:border-gray-700">
             <nav className="relative max-w-7xl w-full mx-auto px-4 md:flex md:items-center md:justify-between md:px-6 lg:px-8" aria-label="Global">
                 <div className="flex items-center justify-between">
                     

@@ -157,7 +157,7 @@ export default function InterestPicker({ source }: {
         <div className={`${isChecked ? '' : 'opacity-50'}`}>
             <div className="mt-6 mb-6 flex flex-col items-center sm:mx-0 w-full">
                 <div
-                    className="py-4 px-6 items-center rounded shadow-lg overflow-hidden w-full sm:w-11/12 md:max-w-xl hover:shadow-xl bg-white dark:bg-dCardBg">
+                    className="py-4 px-6 items-center rounded shadow-lg overflow-hidden w-full sm:w-11/12 hover:shadow-xl bg-white dark:bg-dCardBg">
                     <div className="flex flex-row justify-between items-center">
                         <h2 className="font-semibold text-2xl pb-1">{source === "AI_Articles" ? "AI Articles" : source}</h2>
                         <label className="relative inline-flex items-center mb-5 cursor-pointer">

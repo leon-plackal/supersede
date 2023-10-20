@@ -52,20 +52,23 @@ export default function LoginPage() {
 
     return (
         <BaseLayout hideNav={true}>
-            <div className="flex items-center my-auto md:h-full">
-                <div className="w-auto mx-auto md:w-96">
+            <div className="flex items-center my-auto md:h-full w-full">
+                <div className="mx-auto w-full sm:w-96">
                     <div>
-                        <div className="bg-white rounded-md shadow-sm dark:bg-slate-800 dark:border-gray-700">
+                        <div className="bg-white rounded-md shadow-sm dark:bg-gray-200 dark:border-gray-700">
                             <div className="p-4 sm:p-7">
                                 <div className="text-center">
-                                    <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Sign in</h1>
+                                    <h1 className="block text-2xl font-bold text-gray-800">Sign in</h1>
                                     
                                 </div>
                                 <Auth supabaseClient={supabaseClient} 
                                 appearance={{
                                     theme: ThemeSupa, 
                                     style: {
-                                        input: { background: 'white' },
+                                        button: { borderColor: 'gray' },
+                                        input: { background: 'white', borderColor: 'gray' },
+                                        label: { color: 'black' },
+                                        anchor: { color: 'black' },
                                     },
                                 }} providers={['google']} />
                             </div>

@@ -3,6 +3,8 @@ import React, {useEffect, useState} from "react";
 import InterestPicker from "../components/InterestPicker";
 import { useAuth } from "../supabase/Auth";
 import LoaderSquare from "../components/LoaderSquare";
+import { clearCache } from "../services/PostManager";
+import toast from "react-hot-toast";
 
 export default function Profile() {
     const { user } = useAuth();
@@ -17,6 +19,12 @@ export default function Profile() {
         }, 3000);
         return () => clearTimeout(timer);
     }, []);
+
+    const handleRefresh = async () => {
+        // Clear the cache for 'cached posts'
+        clearCache();
+        toast.success('Refreshed feed!');
+    };
 
     return (
         <BaseLayout hideNav={false}>
@@ -36,6 +44,11 @@ export default function Profile() {
             </div>
             
             {loading && <div className="flex justify-center items-center h-96 flex-col gap-2"><LoaderSquare message="Loading your profile..."/></div>}
+            <div className="flex justify-end px-2" style={{visibility: loading ? 'hidden' : 'visible'}}>
+                <button onClick={handleRefresh} className="rounded-sm text-white bg-blue-600 hover:bg-blue-600 dark:bg-blue-600 px-2 p-1 dark:hover:bg-blue-500 transition-all duration-300">
+                    Refresh Feed
+                </button>
+            </div>
             <div style={{visibility: loading ? 'hidden' : 'visible'}}>
                 <InterestPicker source={"Reddit"} />
                 <InterestPicker source={"News"} />

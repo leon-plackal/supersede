@@ -9,16 +9,18 @@ module.exports = {
     extend: {
       colors:{
         lBgMain:'#efeeee',
-        dBgMain:'#171717',
+        dBgMain:'#16151a',
 
         socialBlue: '#218DFA',
         darkModeBlue: '#0f172a',
 
-        dNavBg: '#1f2022',
+        dNavBg: '#1f1d25',
         lNavBg: '#e7e7e9',
 
-        dCardBg: '#1f2227',
+        dCardBg: '#1f1e25',
         lCardBg: '#F9F7F7',
+
+        headerBg: '#222431',
 
         dCardBg2: '#15203b',
         lCardBg2: '#F9F7F7',
