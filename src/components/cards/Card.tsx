@@ -83,7 +83,7 @@ export default function Card({ children, padding, colour, expand, noHover }: {
 
     let hoverStyle = '';
     if(!noHover){
-        hoverStyle = 'lg:hover:bg-gray-200 lg:dark:hover:bg-gray-800'
+        hoverStyle = 'lg:hover:bg-gray-300 lg:dark:hover:bg-slate-900'
     }
 
     return (

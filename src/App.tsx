@@ -10,16 +10,9 @@ import Success from './pages/loginsuccess';
 import React, { useEffect, useState } from 'react';
 import { AuthProvider } from './supabase/Auth';
 import ProtectedRoute from './components/ProtectedRoute';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import SplashScreen from './components/splashscreen';
 
-window.addEventListener('popstate', (event) => {
-    // Handle the back button press here
-    // You can close the app or perform other actions
-    console.log('Back button pressed!', event);
-    // Close the app (for demonstration purposes)
-    window.close();
-  });
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);

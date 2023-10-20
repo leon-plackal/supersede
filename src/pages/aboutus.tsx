@@ -4,10 +4,8 @@ import BaseLayout from "../components/BaseLayout";
 export default function AboutUs(){
     return(
         <BaseLayout hideNav={true}>
-            <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-                <div className="max-w-2xl mx-auto">
-
-                    <div className="grid gap-12">
+                <div className="py-6 items-center my-auto md:h-full">
+                    
                         <div>
                             <h2 className="text-3xl text-gray-800 font-bold lg:text-4xl dark:text-white">
                                 Our vision
@@ -79,9 +77,8 @@ export default function AboutUs(){
                             </div>
 
                         </div>
-                    </div>
+                    
                 </div>
-            </div>
         </BaseLayout>
     )
 }

@@ -14,10 +14,10 @@ module.exports = {
         socialBlue: '#218DFA',
         darkModeBlue: '#0f172a',
 
-        dNavBg: '#1c1b22',
+        dNavBg: '#1f2022',
         lNavBg: '#e7e7e9',
 
-        dCardBg: '#0f172a',
+        dCardBg: '#1f2227',
         lCardBg: '#F9F7F7',
 
         dCardBg2: '#15203b',
@@ -27,7 +27,7 @@ module.exports = {
         dTextPrimary:'#EEEEEE',
 
         lTextSecondary:'#818181',
-        dTextSecondary:'#a8a8a8',
+        dTextSecondary:'#c5c5c5',
       },
       screens: {
         'sm': '640px', // Adjust this value to make the 'sm' breakpoint wider

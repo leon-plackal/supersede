@@ -52,7 +52,7 @@ export default function LoginPage() {
 
     return (
         <BaseLayout hideNav={true}>
-            <div className="flex items-center h-screen">
+            <div className="flex items-center my-auto md:h-full">
                 <div className="w-auto mx-auto md:w-96">
                     <div>
                         <div className="bg-white rounded-md shadow-sm dark:bg-slate-800 dark:border-gray-700">
