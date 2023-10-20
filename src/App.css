@@ -122,3 +122,61 @@
     transform: scale(1);
   }
 }
+
+.glitch {
+  position: relative;
+  z-index: 1;
+}
+
+.glitch:before,
+.glitch:after {
+  display: block;
+  content: attr(data-glitch);
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.8;
+}
+
+.glitch:before {
+  animation: glitch-color 15s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+  color: #0ff;
+  z-index: -1;
+}
+
+.glitch::after {
+  animation: glitch-color 15s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+  animation-delay: 0.3s;
+  color: rgb(255, 0, 162);
+  z-index: -1;
+}
+
+@keyframes glitch-color {
+  0% {
+    transform: translate(0);
+  }
+
+  2% {
+    transform: translate(-1px, 1px);
+  }
+
+  4% {
+    transform: translate(-1px, -1px);
+  }
+
+  6% {
+    transform: translate(1px, 1px);
+  }
+
+  8% {
+    transform: translate(1px, -1px);
+  }
+
+  10% {
+    transform: translate(0px, 0px);
+  }
+
+  to {
+    transform: translate(0);
+  }
+}

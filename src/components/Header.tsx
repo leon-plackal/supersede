@@ -38,9 +38,10 @@ export default function Header() {
                 <div className="flex items-center justify-between">
                     
                     <div className='flex grow justify-between item pr-4'>
-                    <Link className="flex-none text-xl font-semibold font-font2 dark:text-white" to="/" aria-label="Brand">
+                    <Link className="glitch play flex-none text-xl font-semibold font-font2 dark:text-white" to="/" aria-label="Brand" data-glitch="SUPERSEDE">
                         SUPERSEDE
                     </Link>
+                    
                     <div className='md:hidden mt-1'>
                         <ThemeChangerBtn />
                     </div>
@@ -63,9 +64,9 @@ export default function Header() {
                         </button>
                     </div>
                 </div>
-                <div id="navbar-collapse-with-animation" className={`md:block hs-collapse transition-all duration-500 basis-full grow overflow-hidden ${isOpen ? 'open h-60' : 'h-0 md:h-16'}`}>
+                <div id="navbar-collapse-with-animation" className={`md:block hs-collapse transition-all duration-500 basis-full grow overflow-hidden ${isOpen ? 'open h-56' : 'h-0 md:h-16'}`}>
                     <div className="flex flex-col gap-y-4 gap-x-0 mt-5 md:flex-row md:items-center md:justify-end md:gap-y-0 md:gap-x-7 md:mt-0 md:pl-7">
-                    <div className='md:block mt-1'>
+                    <div className='md:block mt-1 hidden'>
                     <ThemeChangerBtn />
                     </div>
                         <Link className="font-medium text-lightPrimary hover:text-blue-600 md:py-6 dark:text-dTextPrimary dark:hover:text-blue-500" to="/aboutus">

@@ -12,6 +12,7 @@ import { AuthProvider } from './supabase/Auth';
 import ProtectedRoute from './components/ProtectedRoute';
 import { Toaster } from 'react-hot-toast';
 import SplashScreen from './components/splashscreen';
+import Privacy from './pages/privacy';
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
                             <Notifications />
                         </ProtectedRoute>} />
                     <Route path="/aboutus" element={<AboutUs />} />
+                    <Route path="/privacy" element={<Privacy />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/saved" element=
                         {<ProtectedRoute>
