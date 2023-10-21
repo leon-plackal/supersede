@@ -1,10 +1,10 @@
 import uuid from '../utilities/uuid';
 
-async function RelatedVideos(query: string): Promise<any[]> {
+async function RelatedVideos(query: string, videoCount:number): Promise<any[]> {
 
-    console.log("Calling Youtube API...");
+    console.log("Calling Youtube API...", query, videoCount);
     try {
-        const response = await fetch(`${import.meta.env.VITE_BASEURL}/youtubevideos?query=${query}`);
+        const response = await fetch(`${import.meta.env.VITE_BASEURL}/youtubevideos?query=${query}&amount=${videoCount}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

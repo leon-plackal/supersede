@@ -61,15 +61,17 @@ const getUserInterests = async (userId: string, source:string): Promise<any[]> =
 };
 
 async function fetchPostsFromSources(user: User): Promise<Post[]> {
-    let numberOfPostsToFetch: number = 0;
+    
     let allPosts: Post[] = [];
 
     if (user) {
         try {
             if (await loadPreferences(user.id, "Reddit")) {
                 const Interests = await getUserInterests(user.id, "Reddit")
+                const numberOfInterests = Interests.length;
+                const numberOfPostsToFetch = Math.floor(15 / numberOfInterests);
                 for (const interest of Interests) {
-                    numberOfPostsToFetch = calculateNumberOfPostsToFetch(interest[1]);
+                    //numberOfPostsToFetch = calculateNumberOfPostsToFetch(interest[1]);
                     const postsFromReddit = await fetchPostsFromReddit(interest[0].toLowerCase(), numberOfPostsToFetch);
                     if (postsFromReddit) {
                         allPosts = allPosts.concat(postsFromReddit);
@@ -79,21 +81,25 @@ async function fetchPostsFromSources(user: User): Promise<Post[]> {
 
             if (await loadPreferences(user.id, "Youtube")) {
                 const Interests = await getUserInterests(user.id, "Youtube")
+                const numberOfInterests = Interests.length;
+                const numberOfPostsToFetch = Math.floor(10 / numberOfInterests);
                 for (const interest of Interests) {
-                    numberOfPostsToFetch = calculateNumberOfPostsToFetch(interest[1]);
-                    const videoIds = await RelatedVideos(interest[0]);
-
+                    //numberOfPostsToFetch = calculateNumberOfPostsToFetch(interest[1]);
+                    const videoIds = await RelatedVideos(interest[0], numberOfPostsToFetch);
                     if (videoIds) {
                         allPosts = allPosts.concat(videoIds);
                     }
+                    
                 }
             }
 
             if (await loadPreferences(user.id, "News")) {
                 const Interests = await getUserInterests(user.id, "News")
+                const numberOfInterests = Interests.length;
+                const numberOfPostsToFetch = Math.floor(15 / numberOfInterests);
                 for (const interest of Interests) {
                     let articles: Post[] = [];
-                    articles = await fetchNewsArticles(interest[0], interest[1]);
+                    articles = await fetchNewsArticles(interest[0], numberOfPostsToFetch);
                     if (articles) {
                         allPosts = allPosts.concat(articles);
                     }
@@ -120,8 +126,8 @@ async function fetchPostsFromSources(user: User): Promise<Post[]> {
                 allPosts = allPosts.concat(await fetchPostsFromReddit("funky", 10))
                 allPosts = allPosts.concat(await fetchPostsFromReddit("animals", 10))
                 allPosts = allPosts.concat(await fetchNewsArticles("global warming", 15))
-                allPosts = allPosts.concat(await RelatedVideos("Nature"))
-                allPosts = allPosts.concat(await RelatedVideos("Cats"))
+                allPosts = allPosts.concat(await RelatedVideos("Nature", 2))
+                allPosts = allPosts.concat(await RelatedVideos("Cats", 2))
                 // @ts-ignore
                 allPosts = allPosts.concat(await ArticleGenerator("Nature"))
             }
