@@ -13,7 +13,7 @@ export default function BaseLayout({ children, hideNav }: BaseLayoutProps) {
     if (hideNav) {
         rightRightColumnClasses += 'w-full justify-center flex items-center h-screen pt-16';
     } else {
-        rightRightColumnClasses += 'mx-1 md:mx-0 md:w-3/4 mt-5 h-screen pt-16';
+        rightRightColumnClasses += 'mx-1 md:mx-0 md:w-3/4 h-screen pt-20';
     }
     return (
         <ThemeProvider attribute="class">

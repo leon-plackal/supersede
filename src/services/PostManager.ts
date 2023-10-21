@@ -3,6 +3,7 @@ import fetchNewsArticles from './newsAPI';
 import RelatedVideos from './YoutubeAPI';
 import ArticleGenerator from './openAPI';
 import {supabaseClient} from "../supabase/supabaseclient";
+import toast from 'react-hot-toast';
 
 interface Post {
     id?: string;
@@ -113,6 +114,7 @@ async function fetchPostsFromSources(user: User): Promise<Post[]> {
 
             // If no posts were found, fetch some default posts
             if (allPosts.length === 0) {
+                toast.success("Set up your profile to get personalised posts!");
                 console.log("No posts found, fetching default posts");
                 allPosts = allPosts.concat(await fetchPostsFromReddit("tennis", 5))
                 allPosts = allPosts.concat(await fetchPostsFromReddit("funky", 10))

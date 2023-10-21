@@ -3,9 +3,11 @@ import { supabaseClient } from "../supabase/supabaseclient";
 import toast from "react-hot-toast";
 import validator from 'validator';
 import TagChip from "./TagChip";
+import Tooltip from "./cards/Tooltip";
 
-export default function InterestPicker({ source }: {
+export default function InterestPicker({ source, tooltip }: {
     source: string;
+    tooltip: string;
 }) {
     const [selectedTags, setSelectedTags] = useState([""]);
     const [userId, setUserId] = useState('');
@@ -130,7 +132,7 @@ export default function InterestPicker({ source }: {
                 setSelectedTags(prevTags => [...prevTags, interestName]); // Update the state immutably
                 toast.success('Added Tag')
             if (error) {
-                console.error('Error adding interest:', error);
+                console.error('Error adding interest:', data, error);
             }
         } catch (error) {
             console.error('Error adding interest:', error);
@@ -157,9 +159,14 @@ export default function InterestPicker({ source }: {
         <div className={`${isChecked ? '' : 'opacity-50'}`}>
             <div className="mt-6 mb-6 flex flex-col items-center sm:mx-0 w-full">
                 <div
-                    className="py-4 px-6 items-center rounded shadow-lg overflow-hidden w-full sm:w-11/12 hover:shadow-xl bg-white dark:bg-dCardBg">
+                    className="py-4 px-6 items-center rounded shadow-lg overflow-hidden w-full hover:shadow-xl bg-white dark:bg-dCardBg">
                     <div className="flex flex-row justify-between items-center">
+                        <div className="flex items-center gap-2">
                         <h2 className="font-semibold text-2xl pb-1">{source === "AI_Articles" ? "AI Articles" : source}</h2>
+                            <Tooltip content={tooltip}/>
+                        </div>
+                        
+                        
                         <label className="relative inline-flex items-center mb-5 cursor-pointer">
                             <input type="checkbox" value="" className="sr-only peer" checked={isChecked} onChange={handleCheckboxChange} />
                             <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">

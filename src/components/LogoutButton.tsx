@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabaseClient } from '../supabase/supabaseclient';
+import { clearCache } from '../services/PostManager';
 
 const LogoutButton = () => {
     const [isLogoutDialogVisible, setLogoutDialogVisible] = useState(false);
@@ -9,6 +10,7 @@ const LogoutButton = () => {
 
     async function logout() {
         const { error } = await supabaseClient.auth.signOut();
+        clearCache();
     }
 
     supabaseClient.auth.onAuthStateChange(async (event) => {
