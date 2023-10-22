@@ -5,7 +5,7 @@ import React from "react";
 export default function NotificationsPage() {
     return (
         <BaseLayout hideNav={false}>
-            <h1 className="text-3xl font-semibold pb-4">Your Preferences</h1>
+            <h1 className="text-3xl font-semibold pb-4">Notifications</h1>
             <div className='h-screen'>
                 <Card padding={'none'} colour={""} expand={false}>
                     <div className='flex flex-col gap-3 p-4'>
@@ -37,7 +37,7 @@ export default function NotificationsPage() {
                             <div>Prefer an App?</div>
                         </div>
                             <div className='text-sm text-lTextSecondary dark:text-dTextSecondary flex flex-col gap-2'>
-                                What??? We have an app???
+                                We have an app???
                                 <br />
                                 Well, not quite. But you can add this page to your home screen on mobile, and it will look and feel like an app!
                                 Simple tap the 3 dot menu in the top right of your chrome browser on android or ios and select "Add to Home Screen". <br /> <a className=" font-bold hover:text-blue-500" href="https://support.google.com/chrome/answer/9658361?hl=en&co=GENIE.Platform%3DAndroid&oco=1">Learn more here</a> <br />

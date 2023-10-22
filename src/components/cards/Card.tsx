@@ -1,5 +1,5 @@
 import React, { useState, ReactNode } from "react";
-
+import { useNavigate } from 'react-router-dom';
 /**
  * A reusable card component that can be expanded when clicked.
  *
@@ -16,6 +16,8 @@ export default function Card({ children, padding, colour, expand, noHover }: {
     expand?: boolean;
     noHover?: boolean;
 }) {
+
+    const history = useNavigate();
     // Define default padding and background color classes
     let pad = 'p-3 md:p-4';
     if (padding === 'none') {
@@ -56,6 +58,11 @@ export default function Card({ children, padding, colour, expand, noHover }: {
             firstDiv.style.maxWidth = '35rem';
             firstDiv.style.margin = 'auto';
         }, 0);
+
+        window.history.pushState(null, "/", window.location.href);
+        window.onpopstate = function () {
+            window.history.pushState(null, "/", window.location.href);
+        };
         setIsExpanded(true);
     };
 
@@ -75,14 +82,17 @@ export default function Card({ children, padding, colour, expand, noHover }: {
             firstDiv.style.maxWidth = '';
             firstDiv.style.margin = '';
         }, 0);
-
+        window.history.pushState(null, "/", window.location.href);
+        window.onpopstate = function () {
+            window.history.pushState(null, "/", window.location.href);
+        };
         setIsExpanded(false);
     };
 
     const cardClassName = `... ${isExpanded ? 'card-expanded pb-16' : ''}`;
 
     let hoverStyle = '';
-    if(!noHover){
+    if (!noHover) {
         hoverStyle = 'lg:hover:bg-gray-300 lg:dark:hover:bg-slate-900'
     }
 

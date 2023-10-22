@@ -161,8 +161,8 @@ export default function FeedCard({
         <div>
             {cardVisible && (
                 <Card expand={true} colour={""} padding={""}>
-                    <div id='header' className="flex gap-3" ref={elementRef}>
-                        <div className="grow">
+                    <div id='header' className="flex sm:gap-3 flex-col sm:flex-row" ref={elementRef}>
+                        <div className="">
                             <a href={url} target="_blank" rel='noreferrer'>
                                 <span className="mr-1 text-lg md:text-2xl font-semibold hover:underline hover:cursor-pointer">{title}</span>
                             </a>
@@ -172,7 +172,7 @@ export default function FeedCard({
                             <div className=''>
                                 <button className='flex items-center gap-2 whitespace-nowrap hover:underline hover:cursor-pointer' onClick={(e) => openInNewTab(`${url}`, e)}>
                                     <SourceIconPicker source={sourceType} />
-                                    <div className='mt-2 text-xs md:text-sm'>
+                                    <div className='sm:mt-2 text-xs md:text-sm'>
                                         {sourceName}
                                     </div>
                                 </button>

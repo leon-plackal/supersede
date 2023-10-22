@@ -58,7 +58,7 @@ export default function Home() {
             {isLoading ? ( // Conditionally render a loader while loading
                 <div className="flex justify-center items-center h-96 flex-col gap-2"><LoaderSquare message="Loading your posts..." /></div>
             ) : (
-                <div className="mb-8">{posts.map((post) => {
+                <div className="mb-16">{posts.map((post) => {
                     if (post) {
                         return (
                             <div key={post.id} id='feed-key-div'>
